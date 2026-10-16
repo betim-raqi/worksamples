@@ -13,7 +13,7 @@
             Assert.Equal(expectedFee, tollFee);
         }
 
-        private static readonly DateTime Weekday = new(2026, 10, 16);
+        private static readonly DateTime Weekday = new(2013, 10, 16);
 
         private static DateTime WeekdayAt(int hour, int minute, int second = 0) =>
             Weekday.AddHours(hour).AddMinutes(minute).AddSeconds(second);
@@ -67,7 +67,7 @@
             TollCalculator tollCalculator = new();
             IVehicle vehicle = new Car();
 
-            DateTime saturday = new(2026,10,17,12,0,0);
+            DateTime saturday = new(2013,10,17,12,0,0);
             int tollFee = tollCalculator.GetTollFee(saturday, vehicle);
 
             // Saturday is a toll-free day, so the expected toll fee is 0 instead of 8.
@@ -79,7 +79,7 @@
         {
             TollCalculator tollCalculator = new();
             IVehicle vehicle = new Car();
-            DateTime sunday = new(2026, 10, 18, 12, 0, 0);
+            DateTime sunday = new(2013, 10, 18, 12, 0, 0);
 
             int tollFee = tollCalculator.GetTollFee(sunday, vehicle);
 
@@ -92,7 +92,7 @@
         {
             TollCalculator tollCalculator = new();
             IVehicle vehicle = new Car();
-            DateTime julyDate = new(2026, 7, 15, 12, 0, 0);
+            DateTime julyDate = new(2013, 7, 15, 12, 0, 0);
 
             int tollFee = tollCalculator.GetTollFee(julyDate, vehicle);
 
