@@ -69,7 +69,7 @@
             TollCalculator tollCalculator = new();
             IVehicle vehicle = new Car();
 
-            DateTime saturday = new(year,10,17,12,0,0);
+            DateTime saturday = new(year,10,19,12,0,0);
             int tollFee = tollCalculator.GetTollFee(saturday, vehicle);
 
             // Saturday is a toll-free day, so the expected toll fee is 0 instead of 8.
@@ -81,7 +81,7 @@
         {
             TollCalculator tollCalculator = new();
             IVehicle vehicle = new Car();
-            DateTime sunday = new(year, 10, 18, 12, 0, 0);
+            DateTime sunday = new(year, 10, 20, 12, 0, 0);
 
             int tollFee = tollCalculator.GetTollFee(sunday, vehicle);
 
