@@ -105,9 +105,8 @@
         {
             TollCalculator tollCalculator = new();
             IVehicle vehicle = new Motorbike();
-            DateTime nonTollfreeDate = new(2026, 10, 16, 12, 0, 0);
 
-            int tollFee = tollCalculator.GetTollFee(nonTollfreeDate, vehicle);
+            int tollFee = tollCalculator.GetTollFee(WeekdayAt(12, 0), vehicle);
 
             // Motorbikes are toll-free, so the expected toll fee is 0 instead of 8.
             Assert.Equal(0, tollFee);
@@ -118,9 +117,8 @@
         {
             TollCalculator tollCalculator = new();
             IVehicle vehicle = new Car();
-            DateTime nonTollfreeDate = new(2026, 10, 16, 12, 0, 0);
 
-            int tollFee = tollCalculator.GetTollFee(nonTollfreeDate, vehicle);
+            int tollFee = tollCalculator.GetTollFee(WeekdayAt(12, 0), vehicle);
             
             // Cars are not toll-free, so the expected toll fee is 8.
             Assert.Equal(8, tollFee);
