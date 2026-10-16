@@ -13,7 +13,9 @@
             Assert.Equal(expectedFee, tollFee);
         }
 
-        private static readonly DateTime Weekday = new(2013, 10, 16);
+        private const int year = 2013;
+
+        private static readonly DateTime Weekday = new(year, 10, 16);
 
         private static DateTime WeekdayAt(int hour, int minute, int second = 0) =>
             Weekday.AddHours(hour).AddMinutes(minute).AddSeconds(second);
@@ -67,7 +69,7 @@
             TollCalculator tollCalculator = new();
             IVehicle vehicle = new Car();
 
-            DateTime saturday = new(2013,10,17,12,0,0);
+            DateTime saturday = new(year,10,17,12,0,0);
             int tollFee = tollCalculator.GetTollFee(saturday, vehicle);
 
             // Saturday is a toll-free day, so the expected toll fee is 0 instead of 8.
@@ -79,7 +81,7 @@
         {
             TollCalculator tollCalculator = new();
             IVehicle vehicle = new Car();
-            DateTime sunday = new(2013, 10, 18, 12, 0, 0);
+            DateTime sunday = new(year, 10, 18, 12, 0, 0);
 
             int tollFee = tollCalculator.GetTollFee(sunday, vehicle);
 
@@ -92,7 +94,7 @@
         {
             TollCalculator tollCalculator = new();
             IVehicle vehicle = new Car();
-            DateTime julyDate = new(2013, 7, 15, 12, 0, 0);
+            DateTime julyDate = new(year, 7, 15, 12, 0, 0);
 
             int tollFee = tollCalculator.GetTollFee(julyDate, vehicle);
 
@@ -140,22 +142,22 @@
         // TODO: Generalize the public holiday dates for multiple years and add more test cases for different years.
         public static TheoryData<DateTime> GetPublicHolidayDates => new()
         {
-            { new DateTime(2013, 1, 1, 12, 0, 0) },
-            { new DateTime(2013, 3, 28, 12, 0, 0) },
-            { new DateTime(2013, 3, 29, 12, 0, 0) },
-            { new DateTime(2013, 4, 1, 12, 0, 0) },
-            { new DateTime(2013, 4, 30, 12, 0, 0) },
-            { new DateTime(2013, 5, 1, 12, 0, 0) },
-            { new DateTime(2013, 5, 8, 12, 0, 0) },
-            { new DateTime(2013, 5, 9, 12, 0, 0) },
-            { new DateTime(2013, 6, 5, 12, 0, 0) },
-            { new DateTime(2013, 6, 6, 12, 0, 0) },
-            { new DateTime(2013, 6, 21, 12, 0, 0) },
-            { new DateTime(2013, 11, 1, 12, 0, 0) },
-            { new DateTime(2013, 12, 24, 12, 0, 0) },
-            { new DateTime(2013, 12, 25, 12, 0, 0) },
-            { new DateTime(2013, 12, 26, 12, 0, 0) },
-            { new DateTime(2013, 12, 31, 12, 0, 0) }
+            { new DateTime(year, 1, 1, 12, 0, 0) },
+            { new DateTime(year, 3, 28, 12, 0, 0) },
+            { new DateTime(year, 3, 29, 12, 0, 0) },
+            { new DateTime(year, 4, 1, 12, 0, 0) },
+            { new DateTime(year, 4, 30, 12, 0, 0) },
+            { new DateTime(year, 5, 1, 12, 0, 0) },
+            { new DateTime(year, 5, 8, 12, 0, 0) },
+            { new DateTime(year, 5, 9, 12, 0, 0) },
+            { new DateTime(year, 6, 5, 12, 0, 0) },
+            { new DateTime(year, 6, 6, 12, 0, 0) },
+            { new DateTime(year, 6, 21, 12, 0, 0) },
+            { new DateTime(year, 11, 1, 12, 0, 0) },
+            { new DateTime(year, 12, 24, 12, 0, 0) },
+            { new DateTime(year, 12, 25, 12, 0, 0) },
+            { new DateTime(year, 12, 26, 12, 0, 0) },
+            { new DateTime(year, 12, 31, 12, 0, 0) }
         };
     }
 }
