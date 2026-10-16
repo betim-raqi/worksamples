@@ -55,5 +55,18 @@
             { new DateTime(2026,10,16,02,00,00), 0, "18:30–05:59 (within)" },
             { new DateTime(2026,10,16,06,00,00).AddTicks(-1), 0, "18:30–05:59 (exclusive end)" }
         };
+
+        [Fact]
+        public void GetTollFee_ReturnsZero_WhenSaturday()
+        {
+            TollCalculator tollCalculator = new();
+            IVehicle vehicle = new Car();
+
+            DateTime saturday = new(2026,10,17,12,0,0);
+            int tollFee = tollCalculator.GetTollFee(saturday, vehicle);
+
+            // Saturday is a toll-free day, so the expected toll fee is 0 instead of 8.
+            Assert.Equal(0, tollFee);
+        }
     }
 }
