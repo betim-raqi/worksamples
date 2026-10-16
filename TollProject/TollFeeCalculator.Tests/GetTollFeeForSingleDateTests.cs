@@ -68,5 +68,18 @@
             // Saturday is a toll-free day, so the expected toll fee is 0 instead of 8.
             Assert.Equal(0, tollFee);
         }
+
+        [Fact]
+        public void GetTollFee_ReturnsZero_WhenJuly()
+        {
+            TollCalculator tollCalculator = new();
+            IVehicle vehicle = new Car();
+            DateTime julyDate = new(2026, 7, 15, 12, 0, 0);
+
+            int tollFee = tollCalculator.GetTollFee(julyDate, vehicle);
+
+            // July is a toll-free month, so the expected toll fee is 0 instead of 8.
+            Assert.Equal(0, tollFee);
+        }
     }
 }
