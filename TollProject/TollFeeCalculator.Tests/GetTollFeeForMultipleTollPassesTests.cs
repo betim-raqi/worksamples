@@ -55,5 +55,22 @@ namespace TollFeeCalculator.Tests
             // The total fee should be capped at the maximum of the day (60)
             Assert.Equal(maximumFee, totalFee); 
         }
+
+        [Fact]
+        public void GetTollFee_ReturnsHighestToll_WhenMultiplePassesWithinOneHour()
+        {
+            TollCalculator tollCalculator = new();
+            IVehicle vehicle = new Car();
+            int year = 2013;
+            DateTime[] dates =
+            [
+                new (year, 10, 16, 6, 15, 0),   // 06:15 AM - 8 SEK
+                new (year, 10, 16, 6, 30, 0),  // 06:30 AM - 13 SEK (within one hour of the first pass)
+                new (year, 10, 16, 7, 0, 0)    // 07:00 AM - 18 SEK (within one hour of the second pass)
+            ];
+            int totalFee = tollCalculator.GetTollFee(vehicle, dates);
+            // The total fee should be the highest toll within the one-hour window (18 SEK)
+            Assert.Equal(18, totalFee);
+        }
     }
 }
