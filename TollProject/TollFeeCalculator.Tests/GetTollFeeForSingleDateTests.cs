@@ -15,16 +15,45 @@
 
         public static TheoryData<DateTime, int, string> GetDates => new()
         {
-            { new DateTime(2026,10,16,06,15,0), 8, "06:00–06:29" },
-            { new DateTime(2026,10,16,06,45,0), 13, "06:30–06:59"  },
-            { new DateTime(2026,10,16,07,30,0), 18, "07:00–07:59" },
-            { new DateTime(2026,10,16,08,15,0), 13, "08:00–08:29" },
-            { new DateTime(2026,10,16,09,0,0), 8, "08:30–14:59" },
-            { new DateTime(2026,10,16,15,15,0), 13, "15:00–15:29" },
-            { new DateTime(2026,10,16,15,45,0), 18, "15:30–16:59" },
-            { new DateTime(2026,10,16,17,30,0), 13, "17:00–17:59" },
-            { new DateTime(2026,10,16,18,15,0), 8, "18:00–18:29" },
-            { new DateTime(2026,10,16,18,45,0), 0, "18:30–05:59" }
+            { new DateTime(2026,10,16,06,00,00), 8, "06:00–06:29 (inclusive start)" },
+            { new DateTime(2026,10,16,06,15,00), 8, "06:00–06:29 (within)" },
+            { new DateTime(2026,10,16,06,30,00).AddTicks(-1), 8, "06:00–06:29 (exclusive end)" },
+
+            { new DateTime(2026,10,16,06,30,00), 13, "06:30–06:59 (inclusive start)" },
+            { new DateTime(2026,10,16,06,45,00), 13, "06:30–06:59 (within)" },
+            { new DateTime(2026,10,16,07,0,00).AddTicks(-1), 13, "06:30–06:59 (exclusive end)" },
+
+            { new DateTime(2026,10,16,07,0,00), 18, "07:00–07:59 (inclusive start)" },
+            { new DateTime(2026,10,16,07,30,00), 18, "07:00–07:59 (within)" },
+            { new DateTime(2026,10,16,08,00,00).AddTicks(-1), 18, "07:00–07:59 (exclusive end)" },
+
+            { new DateTime(2026,10,16,08,00,00), 13, "08:00–08:29 (inclusive start)" },
+            { new DateTime(2026,10,16,08,15,00), 13, "08:00–08:29 (within)" },
+            { new DateTime(2026,10,16,08,30,00).AddTicks(-1), 13, "08:00–08:29 (exclusive end)" },
+
+            { new DateTime(2026,10,16,08,30,00), 8, "08:30–14:59 (inclusive start)" },
+            { new DateTime(2026,10,16,09,00,00), 8, "08:30–14:59 (within)" },
+            { new DateTime(2026,10,16,15,00,00).AddTicks(-1), 8, "08:30–14:59 (exclusive end)" },
+
+            { new DateTime(2026,10,16,15,00,00), 13, "15:00–15:29 (inclusive start)" },
+            { new DateTime(2026,10,16,15,15,00), 13, "15:00–15:29 (within)" },
+            { new DateTime(2026,10,16,15,30,00).AddTicks(-1), 13, "15:00–15:29 (exclusive end)" },
+
+            { new DateTime(2026,10,16,15,30,00), 18, "15:30–16:59 (inclusive start)" },
+            { new DateTime(2026,10,16,16,00,00), 18, "15:30–16:59 (within)" },
+            { new DateTime(2026,10,16,17,00,00).AddTicks(-1), 18, "15:30–16:59 (exclusive end)" },
+
+            { new DateTime(2026,10,16,17,00,00), 13, "17:00–17:59 (inclusive start)" },
+            { new DateTime(2026,10,16,17,30,00), 13, "17:00–17:59 (within)" },
+            { new DateTime(2026,10,16,18,00,00).AddTicks(-1), 13, "17:00–17:59 (exclusive end)" },
+
+            { new DateTime(2026,10,16,18,00,00), 8, "18:00–18:29 (inclusive start)" },
+            { new DateTime(2026,10,16,18,15,00), 8, "18:00–18:29 (within)" },
+            { new DateTime(2026,10,16,18,30,00).AddTicks(-1), 8, "18:00–18:29 (exclusive end)" },
+
+            { new DateTime(2026,10,16,18,30,00), 0, "18:30–05:59 (inclusive start)" },
+            { new DateTime(2026,10,16,02,00,00), 0, "18:30–05:59 (within)" },
+            { new DateTime(2026,10,16,06,00,00).AddTicks(-1), 0, "18:30–05:59 (exclusive end)" }
         };
     }
 }
