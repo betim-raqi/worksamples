@@ -7,13 +7,32 @@ namespace TollFeeCalculator.Tests
     public class GetTollFeeForMultipleTollPassesTests
     {
         [Fact]
+        public void GetTollFee_ReturnsCorrectTotalFee_WhenTotalIsWithinMaximum()
+        {
+            TollCalculator tollCalculator = new();
+            IVehicle vehicle = new Car();
+            int year = 2013;
+            DateTime[] dates =
+            [
+                new (year, 10, 16, 6, 0, 0),   // 06:00 AM - 8 SEK
+                new (year, 10, 16, 7, 30, 0),  // 07:30 AM - 18 SEK  
+                new (year, 10, 16, 9, 0, 0),   // 09:00 AM - 8 SEK
+                new (year, 10, 16, 10, 30, 0), // 10:30 AM - 8 SEK
+                new (year, 10, 16, 12, 0, 0),  // 12:00 PM - 8 SEK
+                new (year, 10, 16, 13, 30, 0) // Total fee = 8 +18 +8 +8 +8 +8 =58 SEK
+            ];
+
+            int totalFee = tollCalculator.GetTollFee(vehicle, dates);
+
+            Assert.Equal(58, totalFee);
+        }
+
+        [Fact]
         public void GetTollFee_ReturnsMaximumFee_WhenTotalExceedsMaximum()
         {
             TollCalculator tollCalculator = new();
             IVehicle vehicle = new Car();
-
             int year = 2013;
-
             DateTime[] dates =
             [
                 new (year, 10, 16, 6, 0, 0),   // 06:00 AM - 8 SEK
