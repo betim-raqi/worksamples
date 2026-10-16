@@ -70,6 +70,19 @@
         }
 
         [Fact]
+        public void GetTollFee_ReturnsZero_WhenSunday()
+        {
+            TollCalculator tollCalculator = new();
+            IVehicle vehicle = new Car();
+            DateTime sunday = new(2026, 10, 18, 12, 0, 0);
+
+            int tollFee = tollCalculator.GetTollFee(sunday, vehicle);
+
+            // Sunday is a toll-free public holiday, so the expected toll fee is 0 instead of 8.
+            Assert.Equal(0, tollFee);
+        }
+
+        [Fact]
         public void GetTollFee_ReturnsZero_WhenJuly()
         {
             TollCalculator tollCalculator = new();
