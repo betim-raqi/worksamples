@@ -94,5 +94,31 @@
             // July is a toll-free month, so the expected toll fee is 0 instead of 8.
             Assert.Equal(0, tollFee);
         }
+
+        [Fact]
+        public void GetTollFee_ReturnsZero_WhenMotorbike()
+        {
+            TollCalculator tollCalculator = new();
+            IVehicle vehicle = new Motorbike();
+            DateTime nonTollfreeDate = new(2026, 10, 16, 12, 0, 0);
+
+            int tollFee = tollCalculator.GetTollFee(nonTollfreeDate, vehicle);
+
+            // Motorbikes are toll-free, so the expected toll fee is 0 instead of 8.
+            Assert.Equal(0, tollFee);
+        }
+
+        [Fact]
+        public void GetTollFee_ReturnsFee_WhenCar()
+        {
+            TollCalculator tollCalculator = new();
+            IVehicle vehicle = new Car();
+            DateTime nonTollfreeDate = new(2026, 10, 16, 12, 0, 0);
+
+            int tollFee = tollCalculator.GetTollFee(nonTollfreeDate, vehicle);
+            
+            // Cars are not toll-free, so the expected toll fee is 8.
+            Assert.Equal(8, tollFee);
+        }
     }
 }
