@@ -15,6 +15,7 @@ public class TollCalculator
 
     public int GetTollFee(IVehicle vehicle, DateTime[] dates)
     {
+        ArgumentNullException.ThrowIfNull(vehicle, nameof(vehicle));
         ArgumentNullException.ThrowIfNull(dates, nameof(dates));
 
         if (dates.Length == 0) { return 0; }

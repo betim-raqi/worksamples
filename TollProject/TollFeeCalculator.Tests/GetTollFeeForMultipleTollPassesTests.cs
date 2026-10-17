@@ -182,5 +182,18 @@ namespace TollFeeCalculator.Tests
             DateTime[] dates = null!;
             Assert.Throws<ArgumentNullException>(() => tollCalculator.GetTollFee(vehicle, dates));
         }
+
+        [Fact]
+        public void GetTollFee_ThrowsArgumentNullException_WhenVehicleIsNull()
+        {
+            TollCalculator tollCalculator = new();
+            IVehicle vehicle = null!;
+            DateTime[] dates =
+            [
+                WeekdayAt(6, 0),
+                WeekdayAt(7, 30)
+            ];
+            Assert.Throws<ArgumentNullException>(() => tollCalculator.GetTollFee(vehicle, dates));
+        }
     }
 }
