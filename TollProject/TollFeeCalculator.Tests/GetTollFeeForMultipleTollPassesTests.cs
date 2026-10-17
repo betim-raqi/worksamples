@@ -122,5 +122,38 @@ namespace TollFeeCalculator.Tests
 
             Assert.Equal(0, totalFee);
         }
+
+        [Fact]
+        public void GetTollFee_AddsNewIntervalFee_WhenAtStartOfNewOneHourInterval()
+        {
+            TollCalculator tollCalculator = new();
+            IVehicle vehicle = new Car();
+            // TODO: Consider using higher precision for the time to ensure that the new interval is correctly identified.
+            DateTime[] dates =
+            [
+                WeekdayAt(6, 0),
+                WeekdayAt(7, 1) // 07:01 AM - 18 SEK (new one-hour interval)
+            ];
+
+            int totalFee = tollCalculator.GetTollFee(vehicle, dates);
+
+            // The total fee should include both passes since they are in different one-hour intervals (8 + 18 = 26 SEK)
+            Assert.Equal(26, totalFee);
+        }
+
+        [Fact]
+        public void GetTollFee_DoesNotAddFee_WhenPassesAreExactlyOneHourApart()
+        {
+            TollCalculator tollCalculator = new();
+            IVehicle vehicle = new Car();
+            DateTime[] dates =
+            [
+                WeekdayAt(6, 0),   // 06:00 AM - 8 SEK
+                WeekdayAt(7, 0)    // 07:00 AM - 18 SEK (exactly one hour later)
+            ];
+            int totalFee = tollCalculator.GetTollFee(vehicle, dates);
+            // The total fee should include both passes since they are in different one-hour intervals (8 + 18 = 26 SEK)
+            Assert.Equal(18, totalFee);
+        }
     }
 }
