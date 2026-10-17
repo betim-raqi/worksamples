@@ -15,7 +15,9 @@ public class TollCalculator
 
     public int GetTollFee(IVehicle vehicle, DateTime[] dates)
     {
-        if(dates.Length == 0) { return 0; }
+        ArgumentNullException.ThrowIfNull(dates, nameof(dates));
+
+        if (dates.Length == 0) { return 0; }
         DateTime[] sortedDates = dates.Order().ToArray();
 
         DateTime intervalStart = sortedDates[0];

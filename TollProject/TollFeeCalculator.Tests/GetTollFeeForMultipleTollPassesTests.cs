@@ -56,7 +56,7 @@ namespace TollFeeCalculator.Tests
             int totalFee = tollCalculator.GetTollFee(vehicle, dates);
 
             // The total fee should be capped at the maximum of the day (60)
-            Assert.Equal(maximumFee, totalFee); 
+            Assert.Equal(maximumFee, totalFee);
         }
 
         [Fact]
@@ -172,6 +172,15 @@ namespace TollFeeCalculator.Tests
 
             // The total fee should be the same as if the dates were sorted (8 + 18 + 8 = 34 SEK)
             Assert.Equal(34, totalFee);
+        }
+
+        [Fact]
+        public void GetTollFee_ThrowsArgumentNullException_WhenDatesArrayIsNull()
+        {
+            TollCalculator tollCalculator = new();
+            IVehicle vehicle = new Car();
+            DateTime[] dates = null!;
+            Assert.Throws<ArgumentNullException>(() => tollCalculator.GetTollFee(vehicle, dates));
         }
     }
 }
