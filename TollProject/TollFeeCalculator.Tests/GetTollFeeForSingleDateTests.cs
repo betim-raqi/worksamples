@@ -6,7 +6,7 @@
         [MemberData(nameof(GetDates))]
         public void GetTollFee_ReturnsCorrectFee_WhenWeekday(DateTime date, int expectedFee, string caseName)
         {
-            TollCalculator tollCalculator = new();
+            TollCalculator tollCalculator = CreteCalculator();
             IVehicle vehicle = new Car();
 
             int tollFee = tollCalculator.GetTollFee(date, vehicle);
@@ -16,6 +16,7 @@
         private const int year = 2013;
 
         private static readonly DateTime Weekday = new(year, 10, 16);
+        private TollCalculator CreteCalculator() => new TollCalculator(new SwedishTollFreeDateProvider());
 
         private static DateTime WeekdayAt(int hour, int minute, int second = 0) =>
             Weekday.AddHours(hour).AddMinutes(minute).AddSeconds(second);
@@ -66,7 +67,7 @@
         [Fact]
         public void GetTollFee_ReturnsZero_WhenSaturday()
         {
-            TollCalculator tollCalculator = new();
+            TollCalculator tollCalculator = CreteCalculator();
             IVehicle vehicle = new Car();
 
             DateTime saturday = new(year,10,19,12,0,0);
@@ -79,7 +80,7 @@
         [Fact]
         public void GetTollFee_ReturnsZero_WhenSunday()
         {
-            TollCalculator tollCalculator = new();
+            TollCalculator tollCalculator = CreteCalculator();
             IVehicle vehicle = new Car();
             DateTime sunday = new(year, 10, 20, 12, 0, 0);
 
@@ -92,7 +93,7 @@
         [Fact]
         public void GetTollFee_ReturnsZero_WhenJuly()
         {
-            TollCalculator tollCalculator = new();
+            TollCalculator tollCalculator = CreteCalculator();
             IVehicle vehicle = new Car();
             DateTime julyDate = new(year, 7, 15, 12, 0, 0);
 
@@ -105,7 +106,7 @@
         [Fact]
         public void GetTollFee_ReturnsZero_WhenMotorbike()
         {
-            TollCalculator tollCalculator = new();
+            TollCalculator tollCalculator = CreteCalculator();
             IVehicle vehicle = new Motorbike();
 
             int tollFee = tollCalculator.GetTollFee(WeekdayAt(12, 0), vehicle);
@@ -117,7 +118,7 @@
         [Fact]
         public void GetTollFee_ReturnsFee_WhenCar()
         {
-            TollCalculator tollCalculator = new();
+            TollCalculator tollCalculator = CreteCalculator();
             IVehicle vehicle = new Car();
 
             int tollFee = tollCalculator.GetTollFee(WeekdayAt(12, 0), vehicle);
@@ -130,7 +131,7 @@
         [MemberData(nameof(GetPublicHolidayDates))]
         public void GetTollFee_ReturnsZero_WhenPublicHoliday(DateTime date)
         {
-            TollCalculator tollCalculator = new();
+            TollCalculator tollCalculator = CreteCalculator();
             IVehicle vehicle = new Car();
 
             int tollFee = tollCalculator.GetTollFee(date, vehicle);
