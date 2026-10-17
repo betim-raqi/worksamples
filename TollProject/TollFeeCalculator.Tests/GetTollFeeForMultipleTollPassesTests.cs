@@ -105,5 +105,22 @@ namespace TollFeeCalculator.Tests
 
             Assert.Equal(0, totalFee);
         }
+
+        [Fact]
+        public void GetTollFee_ReturnsZero_WhenAllPassesAreTollFree()
+        {
+            TollCalculator tollCalculator = new();
+            IVehicle vehicle = new Motorbike(); // Motorbike is a toll-free vehicle
+            DateTime[] dates =
+            [
+                WeekdayAt(6, 0),   // 06:00 AM - 8 SEK (but vehicle is toll-free)
+                WeekdayAt(7, 30),  // 07:30 AM - 18 SEK (but vehicle is toll-free)
+                WeekdayAt(9, 0)    // 09:00 AM - 8 SEK (but vehicle is toll-free)
+            ];
+
+            int totalFee = tollCalculator.GetTollFee(vehicle, dates);
+
+            Assert.Equal(0, totalFee);
+        }
     }
 }
