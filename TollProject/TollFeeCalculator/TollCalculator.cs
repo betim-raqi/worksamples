@@ -19,10 +19,10 @@ public class TollCalculator
 
         DateTime intervalStart = dates[0];
         int totalFee = 0;
+        int tempFee = 0;
         foreach (DateTime date in dates)
         {
             int nextFee = GetTollFee(date, vehicle);
-            int tempFee = GetTollFee(intervalStart, vehicle);
 
             long diffInMillies = (long)(date - intervalStart).TotalMilliseconds;
             long minutes = diffInMillies/1000/60;
@@ -36,6 +36,8 @@ public class TollCalculator
             else
             {
                 totalFee += nextFee;
+                intervalStart = date;
+                tempFee = nextFee;
             }
         }
         if (totalFee > 60) totalFee = 60;
