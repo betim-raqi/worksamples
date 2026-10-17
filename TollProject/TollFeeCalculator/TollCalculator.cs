@@ -16,11 +16,12 @@ public class TollCalculator
     public int GetTollFee(IVehicle vehicle, DateTime[] dates)
     {
         if(dates.Length == 0) { return 0; }
+        DateTime[] sortedDates = dates.Order().ToArray();
 
-        DateTime intervalStart = dates[0];
+        DateTime intervalStart = sortedDates[0];
         int totalFee = 0;
         int tempFee = 0;
-        foreach (DateTime date in dates)
+        foreach (DateTime date in sortedDates)
         {
             int nextFee = GetTollFee(date, vehicle);
 

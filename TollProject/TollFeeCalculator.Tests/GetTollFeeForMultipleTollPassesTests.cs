@@ -155,5 +155,23 @@ namespace TollFeeCalculator.Tests
             // The total fee should include both passes since they are in different one-hour intervals (8 + 18 = 26 SEK)
             Assert.Equal(18, totalFee);
         }
+
+        [Fact]
+        public void GetTollFee_ReturnsCorrectFee_WhenTollPassesUnsorted()
+        {
+            TollCalculator tollCalculator = new();
+            IVehicle vehicle = new Car();
+            DateTime[] dates =
+            [
+                WeekdayAt(9, 0),   // 09:00 AM - 8 SEK
+                WeekdayAt(6, 0),   // 06:00 AM - 8 SEK
+                WeekdayAt(7, 30)   // 07:30 AM - 18 SEK
+            ];
+
+            int totalFee = tollCalculator.GetTollFee(vehicle, dates);
+
+            // The total fee should be the same as if the dates were sorted (8 + 18 + 8 = 34 SEK)
+            Assert.Equal(34, totalFee);
+        }
     }
 }
