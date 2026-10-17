@@ -60,7 +60,7 @@ namespace TollFeeCalculator.Tests
         }
 
         [Fact]
-        public void GetTollFee_ReturnsHighestToll_WhenMultiplePassesWithinOneHour()
+        public void GetTollFee_ReturnsHighestToll_WhenMultiplePassesWithinOneHourInterval()
         {
             TollCalculator tollCalculator = new();
             IVehicle vehicle = new Car();
@@ -71,7 +71,7 @@ namespace TollFeeCalculator.Tests
                 WeekdayAt(7, 0)    // 07:00 AM - 18 SEK
             ];
             int totalFee = tollCalculator.GetTollFee(vehicle, dates);
-            // The total fee should be the highest toll within the one-hour window (18 SEK)
+            // The total fee should be the highest toll within the one-hour interval (18 SEK)
             Assert.Equal(18, totalFee);
         }
 
