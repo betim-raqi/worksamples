@@ -93,5 +93,17 @@ namespace TollFeeCalculator.Tests
             // The total fee should be the sum of the highest tolls from each one-hour interval (18 + 8 = 26 SEK)
             Assert.Equal(26, totalFee);
         }
+
+        [Fact]
+        public void GetTollFee_ReturnsZero_WhenNoPasses()
+        {
+            TollCalculator tollCalculator = new();
+            IVehicle vehicle = new Car();
+            DateTime[] dates = [];
+
+            int totalFee = tollCalculator.GetTollFee(vehicle, dates);
+
+            Assert.Equal(0, totalFee);
+        }
     }
 }
