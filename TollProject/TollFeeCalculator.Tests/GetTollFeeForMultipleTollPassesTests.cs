@@ -6,20 +6,24 @@ namespace TollFeeCalculator.Tests
 {
     public class GetTollFeeForMultipleTollPassesTests
     {
+        private const int year = 2013;
+        private static readonly DateTime Weekday = new(year, 10, 16);
+        private static DateTime WeekdayAt(int hour, int minute, int second = 0) =>
+            Weekday.AddHours(hour).AddMinutes(minute).AddSeconds(second);
+
         [Fact]
         public void GetTollFee_ReturnsCorrectTotalFee_WhenTotalIsWithinMaximum()
         {
             TollCalculator tollCalculator = new();
             IVehicle vehicle = new Car();
-            int year = 2013;
             DateTime[] dates =
             [
-                new (year, 10, 16, 6, 0, 0),   // 06:00 AM - 8 SEK
-                new (year, 10, 16, 7, 30, 0),  // 07:30 AM - 18 SEK  
-                new (year, 10, 16, 9, 0, 0),   // 09:00 AM - 8 SEK
-                new (year, 10, 16, 10, 30, 0), // 10:30 AM - 8 SEK
-                new (year, 10, 16, 12, 0, 0),  // 12:00 PM - 8 SEK
-                new (year, 10, 16, 13, 30, 0) // Total fee = 8 +18 +8 +8 +8 +8 =58 SEK
+                WeekdayAt(6, 0),   // 06:00 AM - 8 SEK
+                WeekdayAt(7, 30),  // 07:30 AM - 18 SEK  
+                WeekdayAt(9, 0),   // 09:00 AM - 8 SEK
+                WeekdayAt(10, 30), // 10:30 AM - 8 SEK
+                WeekdayAt(12, 0),  // 12:00 PM - 8 SEK
+                WeekdayAt(13, 30) // Total fee = 8 +18 +8 +8 +8 +8 =58 SEK
             ];
 
             int totalFee = tollCalculator.GetTollFee(vehicle, dates);
@@ -32,16 +36,15 @@ namespace TollFeeCalculator.Tests
         {
             TollCalculator tollCalculator = new();
             IVehicle vehicle = new Car();
-            int year = 2013;
             DateTime[] dates =
             [
-                new (year, 10, 16, 6, 0, 0),   // 06:00 AM - 8 SEK
-                new (year, 10, 16, 7, 30, 0),  // 07:30 AM - 18 SEK  
-                new (year, 10, 16, 9, 0, 0),   // 09:00 AM - 8 SEK
-                new (year, 10, 16, 10, 30, 0), // 10:30 AM - 8 SEK
-                new (year, 10, 16, 12, 0, 0),  // 12:00 PM - 8 SEK
-                new (year, 10, 16, 13, 30, 0), // 13:30 PM - 8 SEK
-                new (year, 10, 16, 16, 00, 0)  // 16:00 PM - 18 SEK
+                WeekdayAt(6, 0),   // 06:00 AM - 8 SEK
+                WeekdayAt(7, 30),  // 07:30 AM - 18 SEK  
+                WeekdayAt(9, 0),   // 09:00 AM - 8 SEK
+                WeekdayAt(10, 30), // 10:30 AM - 8 SEK
+                WeekdayAt(12, 0),  // 12:00 PM - 8 SEK
+                WeekdayAt(13, 30), // 13:30 PM - 8 SEK
+                WeekdayAt(16, 0)  // 16:00 PM - 18 SEK
             ];
 
             int maximumFee = 60;
@@ -61,12 +64,11 @@ namespace TollFeeCalculator.Tests
         {
             TollCalculator tollCalculator = new();
             IVehicle vehicle = new Car();
-            int year = 2013;
             DateTime[] dates =
             [
-                new (year, 10, 16, 6, 15, 0),   // 06:15 AM - 8 SEK
-                new (year, 10, 16, 6, 30, 0),  // 06:30 AM - 13 SEK (within one hour of the first pass)
-                new (year, 10, 16, 7, 0, 0)    // 07:00 AM - 18 SEK (within one hour of the second pass)
+                WeekdayAt(6, 15),   // 06:15 AM - 8 SEK
+                WeekdayAt(6, 30),  // 06:30 AM - 13 SEK
+                WeekdayAt(7, 0)    // 07:00 AM - 18 SEK
             ];
             int totalFee = tollCalculator.GetTollFee(vehicle, dates);
             // The total fee should be the highest toll within the one-hour window (18 SEK)
