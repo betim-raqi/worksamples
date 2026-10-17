@@ -74,5 +74,24 @@ namespace TollFeeCalculator.Tests
             // The total fee should be the highest toll within the one-hour window (18 SEK)
             Assert.Equal(18, totalFee);
         }
+
+        [Fact]
+        public void GetTollFee_AddsFees_WhenPassesAcrossDifferentOneHourIntervals()
+        {
+            TollCalculator tollCalculator = new();
+            IVehicle vehicle = new Car();
+            DateTime[] dates =
+            [
+                WeekdayAt(6, 15),   // 06:15 AM - 8 SEK
+                WeekdayAt(6, 30),  // 06:30 AM - 13 SEK
+                WeekdayAt(7, 0),    // 07:00 AM - 18 SEK
+
+                WeekdayAt(8, 30),   // 08:30 AM - 8 SEK (new one-hour interval)
+                WeekdayAt(9, 0)     // 09:00 AM - 8 SEK
+            ];
+            int totalFee = tollCalculator.GetTollFee(vehicle, dates);
+            // The total fee should be the sum of the highest tolls from each one-hour interval (18 + 8 = 26 SEK)
+            Assert.Equal(26, totalFee);
+        }
     }
 }
