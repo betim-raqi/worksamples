@@ -18,31 +18,39 @@ namespace TollFeeCalculator
 
         private static bool IsPublicHoliday(DateTime date)
         {
-            int year = date.Year;
-            int month = date.Month;
-            int day = date.Day;
+            return GetPublicHolidays(date.Year).Contains(DateOnly.FromDateTime(date));
+        }
 
-            if (year == 2013)
+        private static HashSet<DateOnly> GetPublicHolidays(int year)
+        {
+            DateOnly easterSunday = EasterDates.GetEasterSunday(year);
+
+            HashSet<DateOnly> holidays =
+            [
+                new(year, 1, 1),                                  // New Year's Day
+                new(year, 1, 6),                                  // Epiphany
+                easterSunday.AddDays(-2),                         // Good Friday
+                easterSunday.AddDays(1),                          // Easter Monday
+                new(year, 5, 1),                                  // May Day
+                easterSunday.AddDays(39),                         // Ascension Day
+                new(year, 6, 6),                                  // National Day
+                GetFirstSaturdayFrom(new DateOnly(year, 6, 20)),  // Midsummer Day (Jun 20–26)
+                GetFirstSaturdayFrom(new DateOnly(year, 10, 31)), // All Saints' Day (Oct 31–Nov 6)
+                new(year, 12, 25),                                // Christmas Day
+                new(year, 12, 26),                                // Boxing Day
+            ];
+
+            return holidays;
+        }
+
+        private static DateOnly GetFirstSaturdayFrom(DateOnly start)
+        {
+            DateOnly date = start;
+            while (date.DayOfWeek != DayOfWeek.Saturday)
             {
-                if (month == 1 && day == 1 ||                    // New Year's Day
-                    month == 3 && day == 29 ||                   // Good Friday
-                    month == 4 && day == 1 ||                    // Easter Monday
-                    month == 5 && (day == 1 || day == 9) ||      // May Day, Ascension Day
-                    month == 6 && (day == 6 || day == 22) ||     // National Day, Midsummer Day
-                    month == 11 && day == 2 ||                   // All Saints' Day
-                    month == 12 && (day == 25 || day == 26))     // Christmas Day, Boxing Day
-                {
-                    return true;
-                }
+                date = date.AddDays(1);
             }
-
-            // TODO: Change temporary FIX! Needed so Dec 31, 2013 counts as the day before a holiday.
-            if (year == 2014 && month == 1 && day == 1)          // New Year's Day
-            {
-                return true;
-            }
-
-            return false;
+            return date;
         }
     }
 }
