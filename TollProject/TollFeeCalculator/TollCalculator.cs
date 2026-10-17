@@ -23,7 +23,7 @@ public class TollCalculator
 
         DateTime intervalStart = sortedDates[0];
         int totalFee = 0;
-        int tempFee = 0;
+        int intervalFee = 0;
         foreach (DateTime date in sortedDates)
         {
             int nextFee = GetTollFee(date, vehicle);
@@ -33,15 +33,15 @@ public class TollCalculator
 
             if (minutes <= 60)
             {
-                if (totalFee > 0) totalFee -= tempFee;
-                if (nextFee >= tempFee) tempFee = nextFee;
-                totalFee += tempFee;
+                if (totalFee > 0) totalFee -= intervalFee;
+                if (nextFee >= intervalFee) intervalFee = nextFee;
+                totalFee += intervalFee;
             }
             else
             {
                 totalFee += nextFee;
                 intervalStart = date;
-                tempFee = nextFee;
+                intervalFee = nextFee;
             }
         }
         if (totalFee > 60) totalFee = 60;
