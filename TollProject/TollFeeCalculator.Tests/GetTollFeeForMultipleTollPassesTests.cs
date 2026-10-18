@@ -11,12 +11,12 @@ namespace TollFeeCalculator.Tests
         private static readonly DateTime Weekday = new(year, 10, 16);
         private static DateTime WeekdayAt(int hour, int minute, int second = 0) =>
             Weekday.AddHours(hour).AddMinutes(minute).AddSeconds(second);
-        private TollCalculator CreteCalculator() => new TollCalculator(new SwedishTollFreeDateProvider(), TollFeeSchedules.Standard, new TollFreeVehiclePolicy());
+        private TollCalculator CreateCalculator() => new TollCalculator(new SwedishTollFreeDateProvider(), TollFeeSchedules.Standard, new TollFreeVehiclePolicy());
 
         [Fact]
         public void GetTollFee_ReturnsCorrectTotalFee_WhenTotalIsWithinMaximum()
         {
-            TollCalculator tollCalculator = CreteCalculator();
+            TollCalculator tollCalculator = CreateCalculator();
             IVehicle vehicle = new Vehicle(VehicleKind.Car);
             DateTime[] dates =
             [
@@ -36,7 +36,7 @@ namespace TollFeeCalculator.Tests
         [Fact]
         public void GetTollFee_ReturnsMaximumFee_WhenTotalExceedsMaximum()
         {
-            TollCalculator tollCalculator = CreteCalculator();
+            TollCalculator tollCalculator = CreateCalculator();
             IVehicle vehicle = new Vehicle(VehicleKind.Car);
             DateTime[] dates =
             [
@@ -64,7 +64,7 @@ namespace TollFeeCalculator.Tests
         [Fact]
         public void GetTollFee_ReturnsHighestToll_WhenMultiplePassesWithinOneHourInterval()
         {
-            TollCalculator tollCalculator = CreteCalculator();
+            TollCalculator tollCalculator = CreateCalculator();
             IVehicle vehicle = new Vehicle(VehicleKind.Car);
             DateTime[] dates =
             [
@@ -80,7 +80,7 @@ namespace TollFeeCalculator.Tests
         [Fact]
         public void GetTollFee_AddsFees_WhenPassesAcrossDifferentOneHourIntervals()
         {
-            TollCalculator tollCalculator = CreteCalculator();
+            TollCalculator tollCalculator = CreateCalculator();
             IVehicle vehicle = new Vehicle(VehicleKind.Car);
             DateTime[] dates =
             [
@@ -99,7 +99,7 @@ namespace TollFeeCalculator.Tests
         [Fact]
         public void GetTollFee_ReturnsZero_WhenNoPasses()
         {
-            TollCalculator tollCalculator = CreteCalculator();
+            TollCalculator tollCalculator = CreateCalculator();
             IVehicle vehicle = new Vehicle(VehicleKind.Car);
             DateTime[] dates = [];
 
@@ -111,7 +111,7 @@ namespace TollFeeCalculator.Tests
         [Fact]
         public void GetTollFee_ReturnsZero_WhenAllPassesAreTollFree()
         {
-            TollCalculator tollCalculator = CreteCalculator();
+            TollCalculator tollCalculator = CreateCalculator();
             IVehicle vehicle = new Vehicle(VehicleKind.Motorbike); // Motorbike is a toll-free vehicle
             DateTime[] dates =
             [
@@ -128,7 +128,7 @@ namespace TollFeeCalculator.Tests
         [Fact]
         public void GetTollFee_AddsNewIntervalFee_WhenAtStartOfNewOneHourInterval()
         {
-            TollCalculator tollCalculator = CreteCalculator();
+            TollCalculator tollCalculator = CreateCalculator();
             IVehicle vehicle = new Vehicle(VehicleKind.Car);
             // TODO: Consider using higher precision for the time to ensure that the new interval is correctly identified.
             DateTime[] dates =
@@ -146,7 +146,7 @@ namespace TollFeeCalculator.Tests
         [Fact]
         public void GetTollFee_DoesNotAddFee_WhenPassesAreExactlyOneHourApart()
         {
-            TollCalculator tollCalculator = CreteCalculator();
+            TollCalculator tollCalculator = CreateCalculator();
             IVehicle vehicle = new Vehicle(VehicleKind.Car);
             DateTime[] dates =
             [
@@ -161,7 +161,7 @@ namespace TollFeeCalculator.Tests
         [Fact]
         public void GetTollFee_ReturnsCorrectFee_WhenTollPassesUnsorted()
         {
-            TollCalculator tollCalculator = CreteCalculator();
+            TollCalculator tollCalculator = CreateCalculator();
             IVehicle vehicle = new Vehicle(VehicleKind.Car);
             DateTime[] dates =
             [
@@ -179,7 +179,7 @@ namespace TollFeeCalculator.Tests
         [Fact]
         public void GetTollFee_ThrowsArgumentNullException_WhenDatesArrayIsNull()
         {
-            TollCalculator tollCalculator = CreteCalculator();
+            TollCalculator tollCalculator = CreateCalculator();
             IVehicle vehicle = new Vehicle(VehicleKind.Car);
             DateTime[] dates = null!;
             Assert.Throws<ArgumentNullException>(() => tollCalculator.GetTollFee(vehicle, dates));
@@ -188,7 +188,7 @@ namespace TollFeeCalculator.Tests
         [Fact]
         public void GetTollFee_ThrowsArgumentNullException_WhenVehicleIsNull()
         {
-            TollCalculator tollCalculator = CreteCalculator();
+            TollCalculator tollCalculator = CreateCalculator();
             IVehicle vehicle = null!;
             DateTime[] dates =
             [
