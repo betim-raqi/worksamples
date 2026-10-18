@@ -17,18 +17,25 @@ namespace TollFeeCalculator
             _tollFreeVehiclePolicy = tollFreeVehiclePolicy;
         }
 
-        /**
-         * Calculate the total toll fee for one day
-         *
-         * @param vehicle - the vehicle
-         * @param dates   - date and time of all passes on one day
-         * @return - the total toll fee for that day
-         */
+        private static void ThrowIfDatesOnDifferentDays(DateTime[] dates, string paramName)
+        {
+            if (dates.Length > 0 && dates.Any(d => d.Date != dates[0].Date))
+            {
+                throw new ArgumentException("All dates must be on the same day.", paramName);
+            }
+        }
 
+        /// <summary>
+        /// Calculate the total toll fee for one day
+        /// </summary>
+        /// <param name="vehicle">The vehicle</param>
+        /// <param name="dates">Date and time of all passes on one day</param>
+        /// <returns>The total toll fee for that day</returns>
         public int GetTollFee(IVehicle vehicle, DateTime[] dates)
         {
             ArgumentNullException.ThrowIfNull(vehicle, nameof(vehicle));
             ArgumentNullException.ThrowIfNull(dates, nameof(dates));
+            ThrowIfDatesOnDifferentDays(dates, nameof(dates));
 
             if (dates.Length == 0) { return 0; }
             DateTime[] sortedDates = dates.Order().ToArray();

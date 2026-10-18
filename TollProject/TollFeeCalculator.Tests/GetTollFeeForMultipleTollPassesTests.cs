@@ -211,5 +211,18 @@ namespace TollFeeCalculator.Tests
 
             Assert.Throws<ArgumentNullException>(() => tollCalculator.GetTollFee(vehicle, dates));
         }
+
+        [Fact]
+        public void GetTollFee_ThrowsArgumentException_WhenDatesAcrossMultipleDays()
+        {
+            TollCalculator tollCalculator = CreateCalculator();
+            IVehicle vehicle = new Vehicle(VehicleKind.Car);
+            DateTime[] dates =
+            [
+                new DateTime(2026, 02, 16, 06, 00, 00), // Day 1
+                new DateTime(2026, 02, 17, 07, 30, 00)  // Day 2
+            ];
+            Assert.Throws<ArgumentException>(() => tollCalculator.GetTollFee(vehicle, dates));
+        }
     }
 }
