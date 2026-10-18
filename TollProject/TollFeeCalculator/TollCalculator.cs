@@ -61,6 +61,8 @@ public class TollCalculator
 
     public int GetTollFee(DateTime date, IVehicle vehicle)
     {
+        ArgumentNullException.ThrowIfNull(vehicle, nameof(vehicle));
+
         if (_tollFreeDateProvider.IsTollFreeDate(date) || _tollFreeVehiclePolicy.IsTollFree(vehicle)) return 0;
 
         TimeOnly time = TimeOnly.FromDateTime(date);
