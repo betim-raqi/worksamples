@@ -6,8 +6,11 @@ namespace TollFeeCalculator
 {
     public class StandardTollFeeSchedule : ITollFeeSchedule
     {
-        public int GetFee(int hour, int minute)
+        public int GetFee(TimeOnly time)
         {
+            int hour = time.Hour;
+            int minute = time.Minute;
+
             if (hour == 6 && minute >= 0 && minute <= 29) return 8;
             else if (hour == 6 && minute >= 30 && minute <= 59) return 13;
             else if (hour == 7 && minute >= 0 && minute <= 59) return 18;

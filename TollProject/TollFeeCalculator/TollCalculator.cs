@@ -72,10 +72,9 @@ public class TollCalculator
     {
         if (_tollFreeDateProvider.IsTollFreeDate(date) || IsTollFreeVehicle(vehicle)) return 0;
 
-        int hour = date.Hour;
-        int minute = date.Minute;
+        TimeOnly time = TimeOnly.FromDateTime(date);
 
-        int fee = _tollFeeSchedule.GetFee(hour, minute);
+        int fee = _tollFeeSchedule.GetFee(time);
 
         return fee;
     }

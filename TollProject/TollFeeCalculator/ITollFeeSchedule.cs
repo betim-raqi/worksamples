@@ -6,6 +6,6 @@ namespace TollFeeCalculator
 {
     public interface ITollFeeSchedule
     {
-        int GetFee(int hour, int minute);
+        int GetFee(TimeOnly time);
     }
 }
