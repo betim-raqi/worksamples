@@ -4,7 +4,7 @@
     {
         [Theory]
         [MemberData(nameof(GetDates))]
-        public void GetTollFee_ReturnsCorrectFee_WhenWeekday(DateTime date, int expectedFee, string caseName)
+        public void GetTollFee_ReturnsCorrectFee_WhenWeekday(DateTime date, int expectedFee, string _)
         {
             TollCalculator tollCalculator = CreteCalculator();
             IVehicle vehicle = new Car();
