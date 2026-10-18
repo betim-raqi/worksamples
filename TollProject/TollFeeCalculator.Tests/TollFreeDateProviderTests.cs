@@ -38,6 +38,8 @@ namespace TollFeeCalculator.Tests
             { new DateTime(2013, 5, 1, 12, 0, 0) },
             { new DateTime(2013, 5, 9, 12, 0, 0) },
             { new DateTime(2013, 6, 6, 12, 0, 0) },
+            { new DateTime(2013, 6, 22, 12, 0, 0) },
+            { new DateTime(2013, 11, 2, 12, 0, 0) },
             { new DateTime(2013, 12, 25, 12, 0, 0) },
             { new DateTime(2013, 12, 26, 12, 0, 0) },
 
@@ -49,6 +51,9 @@ namespace TollFeeCalculator.Tests
             { new DateTime(2026, 4, 6, 12, 0, 0) },
             { new DateTime(2026, 5, 1, 12, 0, 0) },
             { new DateTime(2026, 5, 14, 12, 0, 0) },
+            { new DateTime(2026, 6, 6, 12, 0, 0) },
+            { new DateTime(2026, 6, 20, 12, 0, 0) },
+            { new DateTime(2026, 10, 31, 12, 0, 0) },
             { new DateTime(2026, 12, 25, 12, 0, 0) },
 
             { new DateTime(2027, 1, 1, 12, 0, 0) }
