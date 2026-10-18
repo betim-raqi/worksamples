@@ -1,4 +1,6 @@
-﻿namespace TollFeeCalculator.Tests
+﻿using TollFeeCalculator.Vehicles;
+
+namespace TollFeeCalculator.Tests
 {
     public class GetTollFeeForSingleDateTests
     {
@@ -16,7 +18,7 @@
         private const int year = 2013;
 
         private static readonly DateTime Weekday = new(year, 10, 16);
-        private TollCalculator CreteCalculator() => new TollCalculator(new SwedishTollFreeDateProvider(), new StandardTollFeeSchedule());
+        private TollCalculator CreteCalculator() => new TollCalculator(new SwedishTollFreeDateProvider(), new StandardTollFeeSchedule(), new TollFreeVehiclePolicy());
 
         private static DateTime WeekdayAt(int hour, int minute, int second = 0) =>
             Weekday.AddHours(hour).AddMinutes(minute).AddSeconds(second);
