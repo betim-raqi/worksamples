@@ -30,7 +30,6 @@ namespace TollFeeCalculator.Tests
             Assert.True(isTollFree);
         }
 
-        // TODO: Generalize the public holiday dates for multiple years and add more test cases for different years.
         public static TheoryData<DateTime> GetPublicHolidayDates => new()
         {
             { new DateTime(2013, 1, 1, 12, 0, 0) },
@@ -41,6 +40,14 @@ namespace TollFeeCalculator.Tests
             { new DateTime(2013, 6, 6, 12, 0, 0) },
             { new DateTime(2013, 12, 25, 12, 0, 0) },
             { new DateTime(2013, 12, 26, 12, 0, 0) },
+
+            { new DateTime(2026, 1, 1, 12, 0, 0) },
+            { new DateTime(2026, 1, 6, 12, 0, 0) },
+            { new DateTime(2026, 4, 3, 12, 0, 0) },
+            { new DateTime(2026, 4, 6, 12, 0, 0) },
+            { new DateTime(2026, 5, 1, 12, 0, 0) },
+            { new DateTime(2026, 5, 14, 12, 0, 0) },
+            { new DateTime(2026, 12, 25, 12, 0, 0) },
         };
     }
 }
