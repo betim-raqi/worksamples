@@ -11,7 +11,7 @@ namespace TollFeeCalculator.Tests
         private static readonly DateTime Weekday = new(year, 10, 16);
         private static DateTime WeekdayAt(int hour, int minute, int second = 0) =>
             Weekday.AddHours(hour).AddMinutes(minute).AddSeconds(second);
-        private TollCalculator CreteCalculator() => new TollCalculator(new SwedishTollFreeDateProvider(), new StandardTollFeeSchedule(), new TollFreeVehiclePolicy());
+        private TollCalculator CreteCalculator() => new TollCalculator(new SwedishTollFreeDateProvider(), TollFeeSchedules.Standard, new TollFreeVehiclePolicy());
 
         [Fact]
         public void GetTollFee_ReturnsCorrectTotalFee_WhenTotalIsWithinMaximum()

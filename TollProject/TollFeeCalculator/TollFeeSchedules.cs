@@ -4,9 +4,9 @@ using System.Text;
 
 namespace TollFeeCalculator
 {
-    public class StandardTollFeeSchedule : ITollFeeSchedule
+    public static class TollFeeSchedules
     {
-        private static readonly TollFeeInterval[] FeeIntervals =
+        public static readonly ITollFeeSchedule Standard = new TollFeeSchedule(
         [
             new(new(6, 0),   new(6, 30),   8),
             new(new(6, 30),  new(7, 0),   13),
@@ -17,15 +17,6 @@ namespace TollFeeCalculator
             new(new(15, 30), new(17, 0),  18),
             new(new(17, 0),  new(18, 0),  13),
             new(new(18, 0),  new(18, 30),  8)
-        ];
-
-        public int GetFee(TimeOnly time)
-        {
-            TollFeeInterval? interval = FeeIntervals.FirstOrDefault(i => time >= i.Start && time < i.End);
-
-            int fee = interval?.Fee ?? 0;
-
-            return fee;
-        }
+        ]);
     }
 }
