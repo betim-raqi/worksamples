@@ -5,10 +5,12 @@ using TollFeeCalculator;
 public class TollCalculator
 {
     private readonly ITollFreeDateProvider _tollFreeDateProvider;
+    private readonly ITollFeeSchedule _tollFeeSchedule;
 
-    public TollCalculator(ITollFreeDateProvider tollFreeDateProvider)
+    public TollCalculator(ITollFreeDateProvider tollFreeDateProvider, ITollFeeSchedule tollFeeSchedule)
     {
         _tollFreeDateProvider = tollFreeDateProvider;
+        _tollFeeSchedule = tollFeeSchedule;
     }
 
     /**
@@ -73,16 +75,9 @@ public class TollCalculator
         int hour = date.Hour;
         int minute = date.Minute;
 
-        if (hour == 6 && minute >= 0 && minute <= 29) return 8;
-        else if (hour == 6 && minute >= 30 && minute <= 59) return 13;
-        else if (hour == 7 && minute >= 0 && minute <= 59) return 18;
-        else if (hour == 8 && minute >= 0 && minute <= 29) return 13;
-        else if (hour == 8 && minute >= 30 || hour > 8 && hour < 14 || hour == 14 && minute <= 59) return 8;
-        else if (hour == 15 && minute >= 0 && minute <= 29) return 13;
-        else if (hour == 15 && minute >= 0 || hour == 16 && minute <= 59) return 18;
-        else if (hour == 17 && minute >= 0 && minute <= 59) return 13;
-        else if (hour == 18 && minute >= 0 && minute <= 29) return 8;
-        else return 0;
+        int fee = _tollFeeSchedule.GetFee(hour, minute);
+
+        return fee;
     }
 
     private enum TollFreeVehicles
