@@ -1,6 +1,4 @@
-﻿using TollFeeCalculator.Vehicles;
-
-namespace TollFeeCalculator.Tests
+﻿namespace TollFeeCalculator.Tests
 {
     public class GetTollFeeForSingleDateTests
     {
@@ -9,7 +7,7 @@ namespace TollFeeCalculator.Tests
         public void GetTollFee_ReturnsCorrectFee_WhenWeekday(DateTime date, int expectedFee, string _)
         {
             TollCalculator tollCalculator = CreteCalculator();
-            IVehicle vehicle = new Car();
+            IVehicle vehicle = new Vehicle(VehicleKind.Car);
 
             int tollFee = tollCalculator.GetTollFee(date, vehicle);
             Assert.Equal(expectedFee, tollFee);
@@ -70,7 +68,7 @@ namespace TollFeeCalculator.Tests
         public void GetTollFee_ReturnsZero_WhenSaturday()
         {
             TollCalculator tollCalculator = CreteCalculator();
-            IVehicle vehicle = new Car();
+            IVehicle vehicle = new Vehicle(VehicleKind.Car);
 
             DateTime saturday = new(year,10,19,12,0,0);
             int tollFee = tollCalculator.GetTollFee(saturday, vehicle);
@@ -83,7 +81,7 @@ namespace TollFeeCalculator.Tests
         public void GetTollFee_ReturnsZero_WhenSunday()
         {
             TollCalculator tollCalculator = CreteCalculator();
-            IVehicle vehicle = new Car();
+            IVehicle vehicle = new Vehicle(VehicleKind.Car);
             DateTime sunday = new(year, 10, 20, 12, 0, 0);
 
             int tollFee = tollCalculator.GetTollFee(sunday, vehicle);
@@ -96,7 +94,7 @@ namespace TollFeeCalculator.Tests
         public void GetTollFee_ReturnsZero_WhenJuly()
         {
             TollCalculator tollCalculator = CreteCalculator();
-            IVehicle vehicle = new Car();
+            IVehicle vehicle = new Vehicle(VehicleKind.Car);
             DateTime julyDate = new(year, 7, 15, 12, 0, 0);
 
             int tollFee = tollCalculator.GetTollFee(julyDate, vehicle);
@@ -109,7 +107,7 @@ namespace TollFeeCalculator.Tests
         public void GetTollFee_ReturnsZero_WhenMotorbike()
         {
             TollCalculator tollCalculator = CreteCalculator();
-            IVehicle vehicle = new Motorbike();
+            IVehicle vehicle = new Vehicle(VehicleKind.Motorbike);
 
             int tollFee = tollCalculator.GetTollFee(WeekdayAt(12, 0), vehicle);
 
@@ -121,7 +119,7 @@ namespace TollFeeCalculator.Tests
         public void GetTollFee_ReturnsFee_WhenCar()
         {
             TollCalculator tollCalculator = CreteCalculator();
-            IVehicle vehicle = new Car();
+            IVehicle vehicle = new Vehicle(VehicleKind.Car);
 
             int tollFee = tollCalculator.GetTollFee(WeekdayAt(12, 0), vehicle);
             
@@ -133,7 +131,7 @@ namespace TollFeeCalculator.Tests
         public void GetTollFee_ReturnsZero_WhenPublicHoliday()
         {
             TollCalculator tollCalculator = CreteCalculator();
-            IVehicle vehicle = new Car();
+            IVehicle vehicle = new Vehicle(VehicleKind.Car);
             DateTime date = new(2013, 12, 25, 12, 0, 0);
 
             int tollFee = tollCalculator.GetTollFee(date, vehicle);
