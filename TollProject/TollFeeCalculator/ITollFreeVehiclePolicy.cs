@@ -1,4 +1,6 @@
-﻿namespace TollFeeCalculator;
+﻿using TollFeeCalculator.Vehicles;
+
+namespace TollFeeCalculator;
 
 public interface ITollFreeVehiclePolicy
 {
