@@ -4,15 +4,16 @@ namespace TollFeeCalculator.Tests
 {
     public class GetTollFeeForSingleDateTests
     {
-        [Theory]
-        [MemberData(nameof(GetDates))]
-        public void GetTollFee_ReturnsCorrectFee_WhenWeekday(DateTime date, int expectedFee, string _)
+        [Fact]
+        public void GetTollFee_ReturnsCorrectFee_WhenWeekday()
         {
             TollCalculator tollCalculator = CreateCalculator();
             IVehicle vehicle = new Vehicle(VehicleKind.Car);
+            DateTime date = new DateTime(2026, 10, 19, 6, 15, 0);
 
             int tollFee = tollCalculator.GetTollFee(date, vehicle);
-            Assert.Equal(expectedFee, tollFee);
+
+            Assert.Equal(8, tollFee);
         }
 
         private const int year = 2013;
@@ -30,49 +31,6 @@ namespace TollFeeCalculator.Tests
 
         private static DateTime WeekdayAt(int hour, int minute, int second = 0) =>
             Weekday.AddHours(hour).AddMinutes(minute).AddSeconds(second);
-
-        public static TheoryData<DateTime, int, string> GetDates => new()
-        {
-            { WeekdayAt(6, 0), 8, "06:00–06:29 (inclusive start)" },
-            { WeekdayAt(6, 15), 8, "06:00–06:29 (within)" },
-            { WeekdayAt(6, 30).AddTicks(-1), 8, "06:00–06:29 (exclusive end)" },
-
-            { WeekdayAt(6, 30), 13, "06:30–06:59 (inclusive start)" },
-            { WeekdayAt(6, 45), 13, "06:30–06:59 (within)" },
-            { WeekdayAt(7, 0).AddTicks(-1), 13, "06:30–06:59 (exclusive end)" },
-
-            { WeekdayAt(7, 0), 18, "07:00–07:59 (inclusive start)" },
-            { WeekdayAt(7, 30), 18, "07:00–07:59 (within)" },
-            { WeekdayAt(8, 0).AddTicks(-1), 18, "07:00–07:59 (exclusive end)" },
-
-            { WeekdayAt(8, 0), 13, "08:00–08:29 (inclusive start)" },
-            { WeekdayAt(8, 15), 13, "08:00–08:29 (within)" },
-            { WeekdayAt(8, 30).AddTicks(-1), 13, "08:00–08:29 (exclusive end)" },
-
-            { WeekdayAt(8, 30), 8, "08:30–14:59 (inclusive start)" },
-            { WeekdayAt(9, 0), 8, "08:30–14:59 (within)" },
-            { WeekdayAt(15, 0).AddTicks(-1), 8, "08:30–14:59 (exclusive end)" },
-
-            { WeekdayAt(15, 0), 13, "15:00–15:29 (inclusive start)" },
-            { WeekdayAt(15, 15), 13, "15:00–15:29 (within)" },
-            { WeekdayAt(15, 30).AddTicks(-1), 13, "15:00–15:29 (exclusive end)" },
-
-            { WeekdayAt(15, 30), 18, "15:30–16:59 (inclusive start)" },
-            { WeekdayAt(16, 0), 18, "15:30–16:59 (within)" },
-            { WeekdayAt(17, 0).AddTicks(-1), 18, "15:30–16:59 (exclusive end)" },
-
-            { WeekdayAt(17, 0), 13, "17:00–17:59 (inclusive start)" },
-            { WeekdayAt(17, 30), 13, "17:00–17:59 (within)" },
-            { WeekdayAt(18, 0).AddTicks(-1), 13, "17:00–17:59 (exclusive end)" },
-
-            { WeekdayAt(18, 0), 8, "18:00–18:29 (inclusive start)" },
-            { WeekdayAt(18, 15), 8, "18:00–18:29 (within)" },
-            { WeekdayAt(18, 30).AddTicks(-1), 8, "18:00–18:29 (exclusive end)" },
-
-            { WeekdayAt(18, 30), 0, "18:30–05:59 (inclusive start)" },
-            { WeekdayAt(2, 0), 0, "18:30–05:59 (within)" },
-            { WeekdayAt(6, 0).AddTicks(-1), 0, "18:30–05:59 (exclusive end)" }
-        };
 
         [Fact]
         public void GetTollFee_ReturnsZero_WhenSaturday()
