@@ -12,7 +12,10 @@ namespace TollFeeCalculator
         private readonly ITollFeeSchedule _tollFeeSchedule;
         private readonly ITollFreeVehiclePolicy _tollFreeVehiclePolicy;
 
-        public TollCalculator(ITollFreeDateProvider tollFreeDateProvider, ITollFeeSchedule tollFeeSchedule, ITollFreeVehiclePolicy tollFreeVehiclePolicy)
+        public TollCalculator(
+            ITollFreeDateProvider tollFreeDateProvider,
+            ITollFeeSchedule tollFeeSchedule,
+            ITollFreeVehiclePolicy tollFreeVehiclePolicy)
         {
             _tollFreeDateProvider = tollFreeDateProvider;
             _tollFeeSchedule = tollFeeSchedule;
