@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TollFeeCalculator
 {
-    public interface ITollFreeDateProvider
+    public interface ITollFreeDatePolicy
     {
         bool IsTollFreeDate(DateTime date);
     }

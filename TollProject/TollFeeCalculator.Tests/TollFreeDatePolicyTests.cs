@@ -4,16 +4,16 @@ using System.Text;
 
 namespace TollFeeCalculator.Tests
 {
-    public class TollFreeDateProviderTests
+    public class TollFreeDatePolicyTests
     {
 
         [Theory]
         [MemberData(nameof(GetPublicHolidayDates))]
         public void IsTollFreeDate_ReturnsTrue_WhenPublicHoliday(DateTime date)
         {
-            ITollFreeDateProvider tollFreeDateProvider = new SwedishTollFreeDateProvider();
+            ITollFreeDatePolicy tollFreeDatePolicy = new SwedishTollFreeDatePolicy();
 
-            bool isTollFree = tollFreeDateProvider.IsTollFreeDate(date);
+            bool isTollFree = tollFreeDatePolicy.IsTollFreeDate(date);
 
             Assert.True(isTollFree);
         }
@@ -22,10 +22,10 @@ namespace TollFeeCalculator.Tests
         [MemberData(nameof(GetPublicHolidayDates))]
         public void IsTollFreeDate_ReturnsTrue_WhenDayBeforePublicHoliday(DateTime date)
         {
-            ITollFreeDateProvider tollFreeDateProvider = new SwedishTollFreeDateProvider();
+            ITollFreeDatePolicy tollFreeDatePolicy = new SwedishTollFreeDatePolicy();
             DateTime dayBefore = date.AddDays(-1);
 
-            bool isTollFree = tollFreeDateProvider.IsTollFreeDate(dayBefore);
+            bool isTollFree = tollFreeDatePolicy.IsTollFreeDate(dayBefore);
             
             Assert.True(isTollFree);
         }

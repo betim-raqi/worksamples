@@ -7,7 +7,7 @@ namespace TollFeeCalculator.Tests
         private static TollCalculator CreateCalculator()
         {
             return new TollCalculator(
-                new SwedishTollFreeDateProvider(),
+                new SwedishTollFreeDatePolicy(),
                 TollFeeSchedules.Standard,
                 new TollFreeVehiclePolicy(),
                 new TollCalculatorSettings
