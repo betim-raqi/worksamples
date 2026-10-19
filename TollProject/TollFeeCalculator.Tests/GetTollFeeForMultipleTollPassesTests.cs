@@ -4,7 +4,7 @@ namespace TollFeeCalculator.Tests
 {
     public class GetTollFeeForMultipleTollPassesTests
     {
-        private TollCalculator CreateCalculator() => new TollCalculator(new SwedishTollFreeDateProvider(), TollFeeSchedules.Standard, new TollFreeVehiclePolicy());
+        private TollCalculator CreateCalculator() => new TollCalculator(new SwedishTollFreeDateProvider(), TollFeeSchedules.Standard, new TollFreeVehiclePolicy(), new TollCalculatorSettings { MaxDailyFee = 60, IntervalWindow = TimeSpan.FromMinutes(60) });
 
         [Fact]
         public void GetTollFee_ReturnsCorrectTotalFee_WhenTotalIsWithinMaximum()

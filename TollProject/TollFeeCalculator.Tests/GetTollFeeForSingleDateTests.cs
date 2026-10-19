@@ -22,7 +22,15 @@ namespace TollFeeCalculator.Tests
             ITollFeeSchedule tollFeeSchedule = TollFeeSchedules.Standard;
             ITollFreeVehiclePolicy tollFreeVehiclePolicy = new TollFreeVehiclePolicy();
 
-            return new TollCalculator(tollFreeDateProvider, tollFeeSchedule, tollFreeVehiclePolicy);
+            return new TollCalculator(
+                tollFreeDateProvider,
+                tollFeeSchedule,
+                tollFreeVehiclePolicy, 
+                new TollCalculatorSettings 
+                { 
+                    MaxDailyFee = 60,
+                    IntervalWindow = TimeSpan.FromMinutes(60) 
+                });
         }
 
         [Fact]

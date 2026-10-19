@@ -6,20 +6,21 @@ namespace TollFeeCalculator
 {
     public class TollCalculator
     {
-        private const int MaxTollFeePerDay = 60;
-        private const int IntervalWindowInMinutes = 60;
         private readonly ITollFreeDateProvider _tollFreeDateProvider;
         private readonly ITollFeeSchedule _tollFeeSchedule;
         private readonly ITollFreeVehiclePolicy _tollFreeVehiclePolicy;
+        private readonly TollCalculatorSettings _settings;
 
         public TollCalculator(
             ITollFreeDateProvider tollFreeDateProvider,
             ITollFeeSchedule tollFeeSchedule,
-            ITollFreeVehiclePolicy tollFreeVehiclePolicy)
+            ITollFreeVehiclePolicy tollFreeVehiclePolicy,
+            TollCalculatorSettings settings)
         {
             _tollFreeDateProvider = tollFreeDateProvider;
             _tollFeeSchedule = tollFeeSchedule;
             _tollFreeVehiclePolicy = tollFreeVehiclePolicy;
+            _settings = settings;
         }
 
         private static void ThrowIfDatesOnDifferentDays(DateTime[] dates, string paramName)
@@ -44,15 +45,14 @@ namespace TollFeeCalculator
 
             if (dates.Length == 0) { return 0; }
 
-            TimeSpan intervalWindow = TimeSpan.FromMinutes(IntervalWindowInMinutes);
             var passes = dates
                 .Order()
                 .Select(date => new TollPass(date, GetTollFee(date, vehicle)));
 
-            int totalFee = SplitIntoWindows(passes, intervalWindow)
+            int totalFee = SplitIntoWindows(passes, _settings.IntervalWindow)
                 .Sum(window => window.HighestFee);
 
-            return Math.Min(totalFee, MaxTollFeePerDay);
+            return Math.Min(totalFee, _settings.MaxDailyFee);
         }
 
         private static List<ChargingWindow> SplitIntoWindows(IEnumerable<TollPass> tollPasses, TimeSpan windowLength)
