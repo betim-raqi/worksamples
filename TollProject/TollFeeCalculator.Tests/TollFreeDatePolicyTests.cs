@@ -11,7 +11,7 @@ namespace TollFeeCalculator.Tests
         [MemberData(nameof(GetPublicHolidayDates))]
         public void IsTollFreeDate_ReturnsTrue_WhenPublicHoliday(DateOnly date)
         {
-            ITollFreeDatePolicy tollFreeDatePolicy = new SwedishTollFreeDatePolicy();
+            SwedishTollFreeDatePolicy tollFreeDatePolicy = new();
 
             bool isTollFree = tollFreeDatePolicy.IsTollFreeDate(date);
 
@@ -22,7 +22,7 @@ namespace TollFeeCalculator.Tests
         [MemberData(nameof(GetPublicHolidayDates))]
         public void IsTollFreeDate_ReturnsTrue_WhenDayBeforePublicHoliday(DateOnly date)
         {
-            ITollFreeDatePolicy tollFreeDatePolicy = new SwedishTollFreeDatePolicy();
+            SwedishTollFreeDatePolicy tollFreeDatePolicy = new();
             DateOnly dayBefore = date.AddDays(-1);
 
             bool isTollFree = tollFreeDatePolicy.IsTollFreeDate(dayBefore);
