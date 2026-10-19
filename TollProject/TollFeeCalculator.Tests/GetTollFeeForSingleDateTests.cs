@@ -18,14 +18,10 @@ namespace TollFeeCalculator.Tests
 
         private static TollCalculator CreateCalculator()
         {
-            ITollFreeDateProvider tollFreeDateProvider = new SwedishTollFreeDateProvider();
-            ITollFeeSchedule tollFeeSchedule = TollFeeSchedules.Standard;
-            ITollFreeVehiclePolicy tollFreeVehiclePolicy = new TollFreeVehiclePolicy();
-
             return new TollCalculator(
-                tollFreeDateProvider,
-                tollFeeSchedule,
-                tollFreeVehiclePolicy, 
+                new SwedishTollFreeDateProvider(),
+                TollFeeSchedules.Standard,
+                new TollFreeVehiclePolicy(), 
                 new TollCalculatorSettings 
                 { 
                     MaxDailyFee = 60,
