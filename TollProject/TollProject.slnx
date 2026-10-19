@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+  </Folder>
   <Project Path="TollFeeCalculator.Tests/TollFeeCalculator.Tests.csproj" Id="41a2a88d-10db-43e9-9642-8447f66c2eda" />
   <Project Path="TollFeeCalculator/TollFeeCalculator.csproj" Id="7091d7e8-e369-4061-988e-f60af953d391" />
 </Solution>

@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TollFeeCalculator
+namespace TollFeeCalculator;
+
+public interface ITollFeeSchedule
 {
-    public interface ITollFeeSchedule
-    {
-        int GetFee(TimeOnly time);
-    }
+    int GetFee(TimeOnly time);
 }

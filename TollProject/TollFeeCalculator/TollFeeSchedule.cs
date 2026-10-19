@@ -2,24 +2,23 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TollFeeCalculator
+namespace TollFeeCalculator;
+
+public class TollFeeSchedule : ITollFeeSchedule
 {
-    public class TollFeeSchedule : ITollFeeSchedule
+    private readonly TollFeeInterval[] _intervals;
+
+    public TollFeeSchedule(IEnumerable<TollFeeInterval> intervals)
     {
-        private readonly TollFeeInterval[] _intervals;
+        _intervals = intervals.ToArray();
+    }
 
-        public TollFeeSchedule(IEnumerable<TollFeeInterval> intervals)
-        {
-            _intervals = intervals.ToArray();
-        }
+    public int GetFee(TimeOnly time)
+    {
+        TollFeeInterval? interval = _intervals.FirstOrDefault(i => time >= i.Start && time < i.End);
 
-        public int GetFee(TimeOnly time)
-        {
-            TollFeeInterval? interval = _intervals.FirstOrDefault(i => time >= i.Start && time < i.End);
+        int fee = interval?.Fee ?? 0;
 
-            int fee = interval?.Fee ?? 0;
-
-            return fee;
-        }
+        return fee;
     }
 }

@@ -1,8 +1,7 @@
-﻿namespace TollFeeCalculator
+﻿namespace TollFeeCalculator;
+
+public class TollCalculatorSettings
 {
-    public class TollCalculatorSettings
-    {
-        public int MaxDailyFee { get; set; }
-        public TimeSpan IntervalWindow { get; set; }
-    }
+    public int MaxDailyFee { get; set; }
+    public TimeSpan IntervalWindow { get; set; }
 }

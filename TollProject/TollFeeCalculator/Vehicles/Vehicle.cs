@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TollFeeCalculator.Vehicles
+namespace TollFeeCalculator.Vehicles;
+
+public class Vehicle(VehicleKind vehicleKind) : IVehicle
 {
-    public class Vehicle(VehicleKind vehicleKind) : IVehicle
-    {
-        public VehicleKind GetVehicleType() => vehicleKind;
-    }
+    public VehicleKind GetVehicleType() => vehicleKind;
 }

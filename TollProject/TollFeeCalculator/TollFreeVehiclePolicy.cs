@@ -3,29 +3,28 @@ using System.Collections.Generic;
 using System.Text;
 using TollFeeCalculator.Vehicles;
 
-namespace TollFeeCalculator
+namespace TollFeeCalculator;
+
+public class TollFreeVehiclePolicy : ITollFreeVehiclePolicy
 {
-    public class TollFreeVehiclePolicy : ITollFreeVehiclePolicy
+    private static readonly HashSet<VehicleKind> TollFreeVehicles =
+    [
+        VehicleKind.Motorbike,
+        VehicleKind.Tractor,
+        VehicleKind.Emergency,
+        VehicleKind.Diplomat,
+        VehicleKind.Foreign,
+        VehicleKind.Military
+    ];
+
+    public bool IsTollFree(IVehicle vehicle)
     {
-        private static readonly HashSet<VehicleKind> TollFreeVehicles =
-        [
-            VehicleKind.Motorbike,
-            VehicleKind.Tractor,
-            VehicleKind.Emergency,
-            VehicleKind.Diplomat,
-            VehicleKind.Foreign,
-            VehicleKind.Military
-        ];
+        ArgumentNullException.ThrowIfNull(vehicle);
 
-        public bool IsTollFree(IVehicle vehicle)
-        {
-            ArgumentNullException.ThrowIfNull(vehicle);
+        VehicleKind vehicleKind = vehicle.GetVehicleType();
 
-            VehicleKind vehicleKind = vehicle.GetVehicleType();
+        bool isTollFree = TollFreeVehicles.Contains(vehicleKind);
 
-            bool isTollFree = TollFreeVehicles.Contains(vehicleKind);
-
-            return isTollFree;
-        }
+        return isTollFree;
     }
 }
