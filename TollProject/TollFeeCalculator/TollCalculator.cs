@@ -43,34 +43,35 @@ namespace TollFeeCalculator
             ThrowIfDatesOnDifferentDays(dates, nameof(dates));
 
             if (dates.Length == 0) { return 0; }
-            DateTime[] sortedDates = dates.Order().ToArray();
 
-            DateTime intervalStart = sortedDates[0];
             TimeSpan intervalWindow = TimeSpan.FromMinutes(IntervalWindowInMinutes);
-            int totalFee = 0;
-            int intervalFee = 0;
-            foreach (DateTime date in sortedDates)
-            {
-                int nextFee = GetTollFee(date, vehicle);
-                TimeSpan diff = date - intervalStart;
+            var passes = dates
+                .Order()
+                .Select(date => new TollPass(date, GetTollFee(date, vehicle)));
 
-                if (diff <= intervalWindow)
+            int totalFee = SplitIntoWindows(passes, intervalWindow)
+                .Sum(window => window.HighestFee);
+
+            return Math.Min(totalFee, MaxTollFeePerDay);
+        }
+
+        private static List<ChargingWindow> SplitIntoWindows(IEnumerable<TollPass> tollPasses, TimeSpan windowLength)
+        {
+            List<ChargingWindow> windows = [];
+            ChargingWindow? currentWindow = null;
+
+            foreach (TollPass pass in tollPasses)
+            {
+                if (currentWindow is null || !currentWindow.Includes(pass.Time))
                 {
-                    if (nextFee > intervalFee)
-                    {
-                        totalFee += nextFee - intervalFee;
-                        intervalFee = nextFee;
-                    }
+                    currentWindow = new ChargingWindow(pass.Time, windowLength);
+                    windows.Add(currentWindow);
                 }
-                else
-                {
-                    totalFee += nextFee;
-                    intervalStart = date;
-                    intervalFee = nextFee;
-                }
+
+                currentWindow.AddFee(pass.Fee);
             }
-            totalFee = Math.Min(totalFee, MaxTollFeePerDay);
-            return totalFee;
+
+            return windows;
         }
 
         public int GetTollFee(DateTime date, IVehicle vehicle)
