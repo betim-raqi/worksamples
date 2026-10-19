@@ -67,7 +67,7 @@ namespace TollFeeCalculator
                     intervalFee = nextFee;
                 }
             }
-            if (totalFee > MaxTollFeePerDay) totalFee = MaxTollFeePerDay;
+            totalFee = Math.Min(totalFee, MaxTollFeePerDay);
             return totalFee;
         }
 
