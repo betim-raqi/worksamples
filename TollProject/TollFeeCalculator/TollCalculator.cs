@@ -56,9 +56,11 @@ namespace TollFeeCalculator
 
                 if (diff <= intervalWindow)
                 {
-                    if (totalFee > 0) totalFee -= intervalFee;
-                    if (nextFee >= intervalFee) intervalFee = nextFee;
-                    totalFee += intervalFee;
+                    if (nextFee > intervalFee)
+                    {
+                        totalFee += nextFee - intervalFee;
+                        intervalFee = nextFee;
+                    }
                 }
                 else
                 {
