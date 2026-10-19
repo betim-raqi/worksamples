@@ -46,11 +46,9 @@ namespace TollFeeCalculator
             foreach (DateTime date in sortedDates)
             {
                 int nextFee = GetTollFee(date, vehicle);
+                TimeSpan diff = date - intervalStart;
 
-                long diffInMillies = (long)(date - intervalStart).TotalMilliseconds;
-                long minutes = diffInMillies/1000/60;
-
-                if (minutes <= 60)
+                if (diff <= TimeSpan.FromMinutes(60))
                 {
                     if (totalFee > 0) totalFee -= intervalFee;
                     if (nextFee >= intervalFee) intervalFee = nextFee;

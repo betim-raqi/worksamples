@@ -132,12 +132,11 @@ namespace TollFeeCalculator.Tests
         {
             TollCalculator tollCalculator = CreateCalculator();
             IVehicle vehicle = new Vehicle(VehicleKind.Car);
-            // TODO: Consider using higher precision for the time to ensure that the new interval is correctly identified.
             DateOnly date = new(2013, 10, 16);
             TimeOnly[] times =
             [
-                new (06, 00), // 8 SEK
-                new (07, 01)  // 18 SEK (new one-hour interval)
+                new TimeOnly(06, 00), // 8 SEK
+                new TimeOnly(07, 00).Add(TimeSpan.FromTicks(1)) // 18 SEK (new one-hour interval)
             ];
             DateTime[] dates = times.Select(date.ToDateTime).ToArray();
 
