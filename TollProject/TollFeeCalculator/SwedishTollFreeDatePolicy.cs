@@ -6,7 +6,7 @@ namespace TollFeeCalculator
 {
     public class SwedishTollFreeDatePolicy : ITollFreeDatePolicy
     {
-        public bool IsTollFreeDate(DateTime date)
+        public bool IsTollFreeDate(DateOnly date)
         {
             if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday) return true;
             if (date.Month == 7) return true;
@@ -16,9 +16,9 @@ namespace TollFeeCalculator
             return isTollFree;
         }
 
-        private static bool IsPublicHoliday(DateTime date)
+        private static bool IsPublicHoliday(DateOnly date)
         {
-            return GetPublicHolidays(date.Year).Contains(DateOnly.FromDateTime(date));
+            return GetPublicHolidays(date.Year).Contains(date);
         }
 
         private static HashSet<DateOnly> GetPublicHolidays(int year)

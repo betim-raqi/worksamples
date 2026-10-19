@@ -6,6 +6,6 @@ namespace TollFeeCalculator
 {
     public interface ITollFreeDatePolicy
     {
-        bool IsTollFreeDate(DateTime date);
+        bool IsTollFreeDate(DateOnly date);
     }
 }

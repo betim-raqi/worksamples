@@ -78,7 +78,7 @@ namespace TollFeeCalculator
         {
             ArgumentNullException.ThrowIfNull(vehicle, nameof(vehicle));
 
-            if (_tollFreeDatePolicy.IsTollFreeDate(date) || _tollFreeVehiclePolicy.IsTollFree(vehicle)) return 0;
+            if (_tollFreeDatePolicy.IsTollFreeDate(DateOnly.FromDateTime(date)) || _tollFreeVehiclePolicy.IsTollFree(vehicle)) return 0;
 
             TimeOnly time = TimeOnly.FromDateTime(date);
 
