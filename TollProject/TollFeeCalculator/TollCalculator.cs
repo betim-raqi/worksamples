@@ -6,6 +6,8 @@ namespace TollFeeCalculator
 {
     public class TollCalculator
     {
+        private const int MaxTollFeePerDay = 60;
+        private const int IntervalWindowInMinutes = 60;
         private readonly ITollFreeDateProvider _tollFreeDateProvider;
         private readonly ITollFeeSchedule _tollFeeSchedule;
         private readonly ITollFreeVehiclePolicy _tollFreeVehiclePolicy;
@@ -41,6 +43,7 @@ namespace TollFeeCalculator
             DateTime[] sortedDates = dates.Order().ToArray();
 
             DateTime intervalStart = sortedDates[0];
+            TimeSpan intervalWindow = TimeSpan.FromMinutes(IntervalWindowInMinutes);
             int totalFee = 0;
             int intervalFee = 0;
             foreach (DateTime date in sortedDates)
@@ -48,7 +51,7 @@ namespace TollFeeCalculator
                 int nextFee = GetTollFee(date, vehicle);
                 TimeSpan diff = date - intervalStart;
 
-                if (diff <= TimeSpan.FromMinutes(60))
+                if (diff <= intervalWindow)
                 {
                     if (totalFee > 0) totalFee -= intervalFee;
                     if (nextFee >= intervalFee) intervalFee = nextFee;
@@ -61,7 +64,7 @@ namespace TollFeeCalculator
                     intervalFee = nextFee;
                 }
             }
-            if (totalFee > 60) totalFee = 60;
+            if (totalFee > MaxTollFeePerDay) totalFee = MaxTollFeePerDay;
             return totalFee;
         }
 
