@@ -15,5 +15,10 @@ internal sealed class ChargingWindow
 
     public bool Includes(DateTime date) => date - Start <= _length;
 
-    public void AddFee(int fee) => HighestFee = Math.Max(HighestFee, fee);
+    public void AddFee(int fee)
+    {
+        ArgumentOutOfRangeException.ThrowIfNegative(fee, nameof(fee));
+
+        HighestFee = Math.Max(HighestFee, fee);
+    }
 }
