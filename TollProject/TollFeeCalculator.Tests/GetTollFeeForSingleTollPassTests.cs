@@ -2,11 +2,11 @@
 
 namespace TollFeeCalculator.Tests;
 
-public class GetTollFeeForSingleDateTests
+public class GetTollFeeForSingleTollPassTests
 {
     private readonly TollCalculator _tollCalculator;
 
-    public GetTollFeeForSingleDateTests()
+    public GetTollFeeForSingleTollPassTests()
     {
         _tollCalculator = new TollCalculator(
             new TollExemptionPolicy(
