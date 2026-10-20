@@ -13,6 +13,8 @@ public class TollCalculator
         ArgumentNullException.ThrowIfNull(tollExemptionPolicy);
         ArgumentNullException.ThrowIfNull(settings);
 
+        settings.Validate();
+
         _tollExemptionPolicy = tollExemptionPolicy;
         _settings = settings;
     }
