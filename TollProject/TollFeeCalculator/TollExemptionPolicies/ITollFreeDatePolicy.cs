@@ -2,5 +2,5 @@
 
 public interface ITollFreeDatePolicy
 {
-    bool IsTollFreeDate(DateOnly date);
+    bool IsTollFree(DateOnly date);
 }

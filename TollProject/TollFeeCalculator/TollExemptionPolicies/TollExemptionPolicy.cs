@@ -8,5 +8,5 @@ public sealed class TollExemptionPolicy(
 {
     public bool IsTollFree(DateOnly date, IVehicle vehicle) =>
         vehiclePolicy.IsTollFree(vehicle) ||
-        datePolicy.IsTollFreeDate(date);
+        datePolicy.IsTollFree(date);
 }

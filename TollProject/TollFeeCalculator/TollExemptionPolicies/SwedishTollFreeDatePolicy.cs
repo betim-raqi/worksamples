@@ -2,7 +2,7 @@
 
 public class SwedishTollFreeDatePolicy : ITollFreeDatePolicy
 {
-    public bool IsTollFreeDate(DateOnly date)
+    public bool IsTollFree(DateOnly date)
     {
         if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday) return true;
         if (date.Month == 7) return true;
