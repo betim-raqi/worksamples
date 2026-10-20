@@ -2,14 +2,17 @@
 
 public class TollFreeDatePolicyTests
 {
+    private readonly SwedishTollFreeDatePolicy _tollFreeDatePolicy;
+    public TollFreeDatePolicyTests()
+    {
+        _tollFreeDatePolicy = new SwedishTollFreeDatePolicy();
+    }
 
     [Theory]
     [MemberData(nameof(GetPublicHolidayDates))]
     public void IsTollFreeDate_ReturnsTrue_WhenPublicHoliday(DateOnly date)
     {
-        SwedishTollFreeDatePolicy tollFreeDatePolicy = new();
-
-        bool isTollFree = tollFreeDatePolicy.IsTollFreeDate(date);
+        bool isTollFree = _tollFreeDatePolicy.IsTollFreeDate(date);
 
         Assert.True(isTollFree);
     }
@@ -18,10 +21,7 @@ public class TollFreeDatePolicyTests
     [MemberData(nameof(GetPublicHolidayDates))]
     public void IsTollFreeDate_ReturnsTrue_WhenDayBeforePublicHoliday(DateOnly date)
     {
-        SwedishTollFreeDatePolicy tollFreeDatePolicy = new();
-        DateOnly dayBefore = date.AddDays(-1);
-
-        bool isTollFree = tollFreeDatePolicy.IsTollFreeDate(dayBefore);
+        bool isTollFree = _tollFreeDatePolicy.IsTollFreeDate(date.AddDays(-1));
         
         Assert.True(isTollFree);
     }
