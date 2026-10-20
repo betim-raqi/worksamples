@@ -9,8 +9,9 @@ public class GetTollFeeForMultipleTollPassesTests
     public GetTollFeeForMultipleTollPassesTests()
     {
         _tollCalculator = new TollCalculator(
-            new SwedishTollFreeDatePolicy(),
-            new TollFreeVehiclePolicy(TollFreeVehicleSets.Standard),
+            new TollExemptionPolicy(
+                new SwedishTollFreeDatePolicy(),
+                new TollFreeVehiclePolicy(TollFreeVehicleSets.Standard)),
             new TollCalculatorSettings
             {
                 MaxDailyFee = 60,

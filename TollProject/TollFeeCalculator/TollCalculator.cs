@@ -4,17 +4,12 @@ namespace TollFeeCalculator;
 
 public class TollCalculator
 {
-    private readonly ITollFreeDatePolicy _tollFreeDatePolicy;
-    private readonly ITollFreeVehiclePolicy _tollFreeVehiclePolicy;
+    private readonly ITollExemptionPolicy _tollExemptionPolicy;
     private readonly TollCalculatorSettings _settings;
 
-    public TollCalculator(
-        ITollFreeDatePolicy tollFreeDatePolicy,
-        ITollFreeVehiclePolicy tollFreeVehiclePolicy,
-        TollCalculatorSettings settings)
+    public TollCalculator(ITollExemptionPolicy tollExemptionPolicy, TollCalculatorSettings settings)
     {
-        _tollFreeDatePolicy = tollFreeDatePolicy;
-        _tollFreeVehiclePolicy = tollFreeVehiclePolicy;
+        _tollExemptionPolicy = tollExemptionPolicy;
         _settings = settings;
     }
 
@@ -72,12 +67,9 @@ public class TollCalculator
     public int GetTollFee(DateTime date, IVehicle vehicle)
     {
         ArgumentNullException.ThrowIfNull(vehicle, nameof(vehicle));
+        if (_tollExemptionPolicy.IsTollFree(DateOnly.FromDateTime(date), vehicle)) return 0;
 
-        if (_tollFreeDatePolicy.IsTollFreeDate(DateOnly.FromDateTime(date)) || _tollFreeVehiclePolicy.IsTollFree(vehicle)) return 0;
-
-        TimeOnly time = TimeOnly.FromDateTime(date);
-
-        int fee = GetFee(time);
+        int fee = GetFee(TimeOnly.FromDateTime(date));
 
         return fee;
     }
