@@ -4,6 +4,12 @@ namespace TollFeeCalculator.Tests;
 
 public class TollFreeVehiclePolicyTests
 {
+    private readonly TollFreeVehiclePolicy _tollFreeVehiclePolicy;
+    public TollFreeVehiclePolicyTests()
+    {
+        _tollFreeVehiclePolicy = new TollFreeVehiclePolicy(TollFreeVehicleSets.Standard);
+    }
+
     [Theory]
     [InlineData(VehicleKind.Motorbike)]
     [InlineData(VehicleKind.Tractor)]
@@ -13,9 +19,7 @@ public class TollFreeVehiclePolicyTests
     [InlineData(VehicleKind.Military)]
     public void IsTollFree_ReturnsTrue_WhenVehicleIsTollFree(VehicleKind vehicleKind)
     {
-        TollFreeVehiclePolicy policy = new TollFreeVehiclePolicy(TollFreeVehicleSets.Standard);
-        IVehicle vehicle = new Vehicle(vehicleKind);
-        bool result = policy.IsTollFree(vehicle);
+        bool result = _tollFreeVehiclePolicy.IsTollFree(new Vehicle(vehicleKind));
         
         Assert.True(result);
     }
@@ -24,9 +28,7 @@ public class TollFreeVehiclePolicyTests
     [InlineData(VehicleKind.Car)]
     public void IsTollFree_ReturnsFalse_WhenVehicleIsNotTollFree(VehicleKind vehicleKind)
     {
-        TollFreeVehiclePolicy policy = new TollFreeVehiclePolicy(TollFreeVehicleSets.Standard);
-        IVehicle vehicle = new Vehicle(vehicleKind);
-        bool result = policy.IsTollFree(vehicle);
+        bool result = _tollFreeVehiclePolicy.IsTollFree(new Vehicle(vehicleKind));
 
         Assert.False(result);
     }
