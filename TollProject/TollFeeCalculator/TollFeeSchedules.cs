@@ -2,7 +2,7 @@
 
 public static class TollFeeSchedules
 {
-    public static readonly ITollFeeSchedule Standard = new TollFeeSchedule(
+    public static readonly List<TollFeeInterval> Standard =
     [
         new(new(6, 0),   new(6, 30),   8),
         new(new(6, 30),  new(7, 0),   13),
@@ -13,5 +13,5 @@ public static class TollFeeSchedules
         new(new(15, 30), new(17, 0),  18),
         new(new(17, 0),  new(18, 0),  13),
         new(new(18, 0),  new(18, 30),  8)
-    ]);
+    ];
 }

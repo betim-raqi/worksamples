@@ -5,18 +5,15 @@ namespace TollFeeCalculator;
 public class TollCalculator
 {
     private readonly ITollFreeDatePolicy _tollFreeDatePolicy;
-    private readonly ITollFeeSchedule _tollFeeSchedule;
     private readonly ITollFreeVehiclePolicy _tollFreeVehiclePolicy;
     private readonly TollCalculatorSettings _settings;
 
     public TollCalculator(
         ITollFreeDatePolicy tollFreeDatePolicy,
-        ITollFeeSchedule tollFeeSchedule,
         ITollFreeVehiclePolicy tollFreeVehiclePolicy,
         TollCalculatorSettings settings)
     {
         _tollFreeDatePolicy = tollFreeDatePolicy;
-        _tollFeeSchedule = tollFeeSchedule;
         _tollFreeVehiclePolicy = tollFreeVehiclePolicy;
         _settings = settings;
     }
@@ -80,7 +77,16 @@ public class TollCalculator
 
         TimeOnly time = TimeOnly.FromDateTime(date);
 
-        int fee = _tollFeeSchedule.GetFee(time);
+        int fee = GetFee(time);
+
+        return fee;
+    }
+
+    private int GetFee(TimeOnly time)
+    {
+        TollFeeInterval? interval = _settings.FeeSchedule.FirstOrDefault(i => time >= i.Start && time < i.End);
+
+        int fee = interval?.Fee ?? 0;
 
         return fee;
     }

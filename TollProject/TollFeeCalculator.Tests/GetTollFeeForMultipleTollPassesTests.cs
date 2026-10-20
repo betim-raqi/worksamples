@@ -10,12 +10,12 @@ public class GetTollFeeForMultipleTollPassesTests
     {
         _tollCalculator = new TollCalculator(
             new SwedishTollFreeDatePolicy(),
-            TollFeeSchedules.Standard,
             new TollFreeVehiclePolicy(TollFreeVehicleSets.Standard),
             new TollCalculatorSettings
             {
                 MaxDailyFee = 60,
-                IntervalWindow = TimeSpan.FromMinutes(60)
+                IntervalWindow = TimeSpan.FromMinutes(60),
+                FeeSchedule = TollFeeSchedules.Standard
             });
     }
 
