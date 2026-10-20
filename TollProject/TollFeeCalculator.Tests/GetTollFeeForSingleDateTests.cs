@@ -11,7 +11,7 @@ public class GetTollFeeForSingleDateTests
         _tollCalculator = new TollCalculator(
             new SwedishTollFreeDatePolicy(),
             TollFeeSchedules.Standard,
-            new TollFreeVehiclePolicy(),
+            new TollFreeVehiclePolicy(TollFreeVehicleSets.Standard),
             new TollCalculatorSettings
             {
                 MaxDailyFee = 60,

@@ -4,15 +4,14 @@ namespace TollFeeCalculator;
 
 public class TollFreeVehiclePolicy : ITollFreeVehiclePolicy
 {
-    private static readonly HashSet<VehicleKind> TollFreeVehicles =
-    [
-        VehicleKind.Motorbike,
-        VehicleKind.Tractor,
-        VehicleKind.Emergency,
-        VehicleKind.Diplomat,
-        VehicleKind.Foreign,
-        VehicleKind.Military
-    ];
+    private readonly HashSet<VehicleKind> _tollFreeVehicles;
+
+    public TollFreeVehiclePolicy(IEnumerable<VehicleKind> tollFreeVehicles)
+    {
+        ArgumentNullException.ThrowIfNull(tollFreeVehicles);
+
+        _tollFreeVehicles = tollFreeVehicles.ToHashSet();
+    }
 
     public bool IsTollFree(IVehicle vehicle)
     {
@@ -20,7 +19,7 @@ public class TollFreeVehiclePolicy : ITollFreeVehiclePolicy
 
         VehicleKind vehicleKind = vehicle.GetVehicleType();
 
-        bool isTollFree = TollFreeVehicles.Contains(vehicleKind);
+        bool isTollFree = _tollFreeVehicles.Contains(vehicleKind);
 
         return isTollFree;
     }

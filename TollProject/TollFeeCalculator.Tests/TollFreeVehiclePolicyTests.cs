@@ -13,7 +13,7 @@ public class TollFreeVehiclePolicyTests
     [InlineData(VehicleKind.Military)]
     public void IsTollFree_ReturnsTrue_WhenVehicleIsTollFree(VehicleKind vehicleKind)
     {
-        TollFreeVehiclePolicy policy = new TollFreeVehiclePolicy();
+        TollFreeVehiclePolicy policy = new TollFreeVehiclePolicy(TollFreeVehicleSets.Standard);
         IVehicle vehicle = new Vehicle(vehicleKind);
         bool result = policy.IsTollFree(vehicle);
         
@@ -24,7 +24,7 @@ public class TollFreeVehiclePolicyTests
     [InlineData(VehicleKind.Car)]
     public void IsTollFree_ReturnsFalse_WhenVehicleIsNotTollFree(VehicleKind vehicleKind)
     {
-        TollFreeVehiclePolicy policy = new TollFreeVehiclePolicy();
+        TollFreeVehiclePolicy policy = new TollFreeVehiclePolicy(TollFreeVehicleSets.Standard);
         IVehicle vehicle = new Vehicle(vehicleKind);
         bool result = policy.IsTollFree(vehicle);
 
