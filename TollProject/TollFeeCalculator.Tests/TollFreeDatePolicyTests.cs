@@ -9,7 +9,7 @@ public class TollFreeDatePolicyTests
     }
 
     [Theory]
-    [MemberData(nameof(GetPublicHolidayDates))]
+    [MemberData(nameof(PublicHolidayDates))]
     public void IsTollFreeDate_ReturnsTrue_WhenPublicHoliday(DateOnly date)
     {
         bool isTollFree = _tollFreeDatePolicy.IsTollFreeDate(date);
@@ -18,7 +18,7 @@ public class TollFreeDatePolicyTests
     }
 
     [Theory]
-    [MemberData(nameof(GetPublicHolidayDates))]
+    [MemberData(nameof(PublicHolidayDates))]
     public void IsTollFreeDate_ReturnsTrue_WhenDayBeforePublicHoliday(DateOnly date)
     {
         bool isTollFree = _tollFreeDatePolicy.IsTollFreeDate(date.AddDays(-1));
@@ -26,7 +26,7 @@ public class TollFreeDatePolicyTests
         Assert.True(isTollFree);
     }
 
-    public static TheoryData<DateOnly> GetPublicHolidayDates => new()
+    public static TheoryData<DateOnly> PublicHolidayDates => new()
     {
         { new DateOnly(2013, 1, 1) },
         { new DateOnly(2013, 3, 29) },
