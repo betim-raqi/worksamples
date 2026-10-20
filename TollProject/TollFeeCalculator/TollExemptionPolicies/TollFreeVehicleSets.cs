@@ -1,6 +1,6 @@
 ﻿using TollFeeCalculator.Vehicles;
 
-namespace TollFeeCalculator;
+namespace TollFeeCalculator.TollExemptionPolicies;
 
 public static class TollFreeVehicleSets
 {

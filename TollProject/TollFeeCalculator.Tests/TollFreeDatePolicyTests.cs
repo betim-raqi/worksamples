@@ -1,4 +1,6 @@
-﻿namespace TollFeeCalculator.Tests;
+﻿using TollFeeCalculator.TollExemptionPolicies;
+
+namespace TollFeeCalculator.Tests;
 
 public class TollFreeDatePolicyTests
 {

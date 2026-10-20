@@ -1,4 +1,5 @@
-﻿using TollFeeCalculator.Vehicles;
+﻿using TollFeeCalculator.TollExemptionPolicies;
+using TollFeeCalculator.Vehicles;
 
 namespace TollFeeCalculator;
 
