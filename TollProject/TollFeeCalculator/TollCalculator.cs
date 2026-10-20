@@ -76,9 +76,8 @@ public class TollCalculator
 
     private int GetFee(TimeOnly time)
     {
-        TollFeeInterval? interval = _settings.FeeSchedule.FirstOrDefault(i => time >= i.Start && time < i.End);
-
-        int fee = interval?.Fee ?? 0;
+        int fee = _settings.FeeSchedule
+            .FirstOrDefault(i => time >= i.Start && time < i.End)?.Fee ?? 0;
 
         return fee;
     }
