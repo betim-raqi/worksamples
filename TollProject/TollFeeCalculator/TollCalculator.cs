@@ -10,6 +10,9 @@ public class TollCalculator
 
     public TollCalculator(ITollExemptionPolicy tollExemptionPolicy, TollCalculatorSettings settings)
     {
+        ArgumentNullException.ThrowIfNull(tollExemptionPolicy);
+        ArgumentNullException.ThrowIfNull(settings);
+
         _tollExemptionPolicy = tollExemptionPolicy;
         _settings = settings;
     }
