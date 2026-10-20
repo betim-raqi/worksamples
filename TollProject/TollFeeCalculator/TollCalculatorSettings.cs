@@ -18,5 +18,19 @@ public class TollCalculatorSettings
         {
             throw new ArgumentException("FeeSchedule must contain at least one interval.", nameof(FeeSchedule));
         }
+
+        ThrowIfOverlappingIntervals();
+    }
+
+    private void ThrowIfOverlappingIntervals()
+    {
+        var intervals = FeeSchedule.OrderBy(interval => interval.Start).ToList();
+        for (int i = 0; i < intervals.Count - 1; i++)
+        {
+            if (intervals[i].End > intervals[i + 1].Start)
+            {
+                throw new ArgumentException("FeeSchedule intervals must not overlap.");
+            }
+        }
     }
 }
