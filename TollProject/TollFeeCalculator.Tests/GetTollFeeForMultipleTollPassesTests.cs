@@ -226,4 +226,22 @@ public class GetTollFeeForMultipleTollPassesTests
         ];
         Assert.Throws<ArgumentException>(() => _tollCalculator.GetTollFee(vehicle, dates));
     }
+
+    [Fact]
+    public void GetTollFee_DoesNotDoubleCharge_WhenDuplicateTollPassesExist()
+    {
+        IVehicle vehicle = new Vehicle(VehicleKind.Car);
+        DateOnly date = new(2013, 10, 16);
+        TimeOnly[] times =
+        [
+            new (06, 00), // 8 SEK
+            new (06, 00), // Duplicate pass at the same time
+            new (07, 30)  // 18 SEK
+        ];
+        DateTime[] dates = times.Select(date.ToDateTime).ToArray();
+        int totalFee = _tollCalculator.GetTollFee(vehicle, dates);
+
+        // The total fee should not double charge for the duplicate pass
+        Assert.Equal(26, totalFee);
+    }
 }
