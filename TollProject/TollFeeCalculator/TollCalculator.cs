@@ -64,6 +64,12 @@ public class TollCalculator
         return windows;
     }
 
+    /// <summary>
+    /// Get toll fee for a single date
+    /// </summary>
+    /// <param name="date"></param>
+    /// <param name="vehicle"></param>
+    /// <returns></returns>
     public int GetTollFee(DateTime date, IVehicle vehicle)
     {
         ArgumentNullException.ThrowIfNull(vehicle, nameof(vehicle));
