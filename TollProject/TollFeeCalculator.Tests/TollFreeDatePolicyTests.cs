@@ -28,6 +28,34 @@ public class TollFreeDatePolicyTests
         Assert.True(isTollFree);
     }
 
+    [Fact]
+    public void IsTollFreeDate_ReturnsTrue_WhenSaturday()
+    {
+        bool isTollFree = _tollFreeDatePolicy.IsTollFree(new(2026, 10, 24));
+        Assert.True(isTollFree);
+    }
+
+    [Fact]
+    public void IsTollFreeDate_ReturnsTrue_WhenSunday()
+    {
+        bool isTollFree = _tollFreeDatePolicy.IsTollFree(new(2026, 10, 25));
+        Assert.True(isTollFree);
+    }
+
+    [Fact]
+    public void IsTollFreeDate_ReturnsTrue_WhenJuly()
+    {
+        bool isTollFree = _tollFreeDatePolicy.IsTollFree(new(2026, 7, 15));
+        Assert.True(isTollFree);
+    }
+
+    [Fact]
+    public void IsTollFreeDate_ReturnsFalse_WhenRegularWeekday()
+    {
+        bool isTollFree = _tollFreeDatePolicy.IsTollFree(new(2026, 10, 20));
+        Assert.False(isTollFree);
+    }
+
     public static TheoryData<DateOnly> PublicHolidayDates => new()
     {
         { new DateOnly(2013, 1, 1) },
