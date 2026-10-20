@@ -1,4 +1,4 @@
-﻿namespace TollFeeCalculator;
+﻿namespace TollFeeCalculator.TollExemptionPolicies;
 
 public static class EasterDates
 {
